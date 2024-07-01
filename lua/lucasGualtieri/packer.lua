@@ -25,6 +25,14 @@ return require('packer').startup(function(use)
 	use ('ThePrimeagen/harpoon')
 	use ('mbbill/undotree')
 	use ('tpope/vim-fugitive')
+    
+    use {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup {}
+        end
+    }
 
     -- use 'mfussenegger/nvim-jdtls'
 
