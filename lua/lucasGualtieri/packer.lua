@@ -25,7 +25,7 @@ return require('packer').startup(function(use)
 	use ('ThePrimeagen/harpoon')
 	use ('mbbill/undotree')
 	use ('tpope/vim-fugitive')
-    
+        
     use {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
@@ -34,13 +34,28 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- use 'mfussenegger/nvim-jdtls'
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("ibl").setup {}
+        end
+    }
 
-	use {
+    use {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup {}
+        end
+    }
+
+    use 'ThePrimeagen/vim-be-good'
+    -- use 'LuaLS/lua-language-server'
+
+    use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v3.x',
 		requires = {
-			--- Uncomment the two plugins below if you want to manage the language servers from neovim
+			-- Uncomment the two plugins below if you want to manage the language servers from neovim
 			-- {'williamboman/mason.nvim'},
 			-- {'williamboman/mason-lspconfig.nvim'},
 
@@ -50,4 +65,5 @@ return require('packer').startup(function(use)
 			{'L3MON4D3/LuaSnip'},
 		}
 	}
+
 end)

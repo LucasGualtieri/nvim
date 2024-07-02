@@ -9,3 +9,4 @@ end)
 -- here you can setup the language servers
 
 require('lspconfig').clangd.setup({})
+-- require'lspconfig'.lua_ls.setup{}
