@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	color = color or "rose-pine-moon"
+	color = color or "arctic"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -69,6 +69,17 @@ return {
                     floats = "dark", -- style for floating windows
                 },
             })
+        end
+    },
+
+    {
+        "rockyzhang24/arctic.nvim",
+        dependencies = { "rktjmp/lush.nvim" },
+        name = "arctic",
+        branch = "main",
+        priority = 1000,
+        config = function()
+            vim.cmd("colorscheme arctic")
         end
     },
 
