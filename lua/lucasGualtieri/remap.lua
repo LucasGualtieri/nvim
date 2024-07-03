@@ -77,17 +77,3 @@ vim.keymap.set("n", "<leader><Tab>", function()
         vim.wo.number = true
     end
 end)
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        -- group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-        vim.highlight.on_yank()
-    end,
-})
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        -- group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-        vim.highlight.on_yank()
-    end,
-})
