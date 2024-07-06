@@ -1,20 +1,25 @@
 return {
-    'thePrimeagen/harpoon',
-
-    require("harpoon").setup({
-        menu = {
-            -- width = vim.api.nvim_win_get_width(0) - 4,
-            width = 80
-        }
-    }),
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
 
     config = function()
-        vim.keymap.set("n", "<leader>a", function() require("harpoon.mark").add_file() end)
-        vim.keymap.set("n", "<C-e>", function() require("harpoon.ui").toggle_quick_menu() end)
 
-        vim.keymap.set("n", "<C-h>", function() require("harpoon.ui").nav_file(1) end)
-        vim.keymap.set("n", "<C-t>", function() require("harpoon.ui").nav_file(2) end)
-        vim.keymap.set("n", "<C-n>", function() require("harpoon.ui").nav_file(3) end)
-        vim.keymap.set("n", "<C-s>", function() require("harpoon.ui").nav_file(4) end)
+        local harpoon = require("harpoon")
+
+        harpoon:setup()
+
+        vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+        vim.keymap.set("n", "<C-g>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+        vim.keymap.set("n", "<A-1>", function() harpoon:list():select(1) end)
+        vim.keymap.set("n", "<A-2>", function() harpoon:list():select(2) end)
+        vim.keymap.set("n", "<A-3>", function() harpoon:list():select(3) end)
+        vim.keymap.set("n", "<A-4>", function() harpoon:list():select(4) end)
+
+        -- achar onde foi usado c-l e achar uma bind para o quick menu
+
+        vim.keymap.set("n", "<C-h>", function() harpoon:list():prev() end)
+        vim.keymap.set("n", "<C-l>", function() harpoon:list():next() end)
     end
 }

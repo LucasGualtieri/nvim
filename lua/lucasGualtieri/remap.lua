@@ -17,24 +17,30 @@ vim.keymap.set("i", "<C-h>", "<Left>")
 vim.keymap.set("i", "<C-l>", "<Right>")
 vim.keymap.set("i", "<C-k>", "<Up>")
 vim.keymap.set("i", "<C-j>", "<Down>")
+vim.keymap.set("i", "<C-b>", "<C-o>b")
+vim.keymap.set("i", "<C-Del>", "<C-o>dw")
 
 vim.keymap.set("n", "<BS>", "a<BS><Esc>")
 vim.keymap.set("n", "<Del>", "a<Del><Esc>")
 vim.keymap.set("n", "<Enter>", "i<Enter><Esc>")
 
+-- vim.keymap.set("n", "<C-;>", "gcc")
+
+-- vim.api.nvim_set_keymap('i', '<tab>', '<tab>', { noremap = true, silent = true })
+
 -- vim.keymap.set("n", "<leader>vwm", function()
-    -- require("vim-with-me").StartVimWithMe()
+--     require("vim-with-me").startvimwithme()
 -- end)
 -- vim.keymap.set("n", "<leader>svwm", function()
-    -- require("vim-with-me").StopVimWithMe()
+--     require("vim-with-me").stopvimwithme()
 -- end)
 
 -- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dp]])
 
--- next greatest remap ever : asbjornHaland
+-- next greatest remap ever : asbjornhaland
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set("n", "<leader>y", [["+y]])
 
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
