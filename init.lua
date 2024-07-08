@@ -34,9 +34,7 @@ dofile(vim.g.base46_cache .. "statusline")
 
 require "nvchad.autocmds"
 
-vim.schedule(function()
-	require "mappings"
-end)
+vim.schedule(function() require "mappings" end)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('HighlightYank', {}),
@@ -48,6 +46,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         })
     end,
 })
+
+require('nvim-tree').setup({ })
 
 -- Supostamente desliga as tabs
 -- vim.g.lazygit_disable_tabline = true

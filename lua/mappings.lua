@@ -11,7 +11,7 @@ local options = { noremap = true, silent = true }
 map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
+-- map("i", "jk", "<ESC>")
 
 -- Enables saving with control + s
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
@@ -69,6 +69,7 @@ map("n", "<Enter>", "a<Enter><Esc>")
 
 map({"n", "v"}, "<leader>y", [["+y]])
 map("n", "<leader>y", [["+y]])
+-- map({"n", "v"}, "<leader>d", [["_d]])
 
 -- Unmap y from copying to the system clipboard
 map('n', 'y', '"+y', options)
@@ -84,6 +85,8 @@ map('n', 'Y', 'Y', options)
 -- map({"n", "v"}, "<leader>d", [["_d]])
 
 map("i", "<C-c>", "<Esc>")
+
+map("n", "<leader>gg", "<cmd>LazyGit<CR>")
 
 -- Not sure if I should be using these with NVChad
 -- vim.keymap.set("n", "Q", "<nop>")
