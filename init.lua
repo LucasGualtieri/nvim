@@ -49,5 +49,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require('nvim-tree').setup({ })
 
+require'nvim-treesitter.configs'.setup {
+	-- ensure_installed = "maintained", -- Install all maintained parsers
+	highlight = { enable = true },
+	indent = { enable = true },
+	fold = { enable = true }
+}
+
+-- Use Treesitter folding method
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99 -- Ensure all folds are open by default
+vim.api.nvim_set_keymap('n', '<leader>t', 'za', { noremap = true })
+
 -- Supostamente desliga as tabs
 -- vim.g.lazygit_disable_tabline = true
