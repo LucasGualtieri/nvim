@@ -27,6 +27,7 @@ map("n", "<leader>fm", function()
 end, { desc = "format files" })
 
 -- global lsp mappings
+map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "lsp rename variable" })
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic loclist" })
 map("n", "<leader>gd", function()
 	vim.lsp.buf.definition()

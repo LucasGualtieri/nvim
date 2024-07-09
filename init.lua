@@ -60,7 +60,7 @@ require'nvim-treesitter.configs'.setup {
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 99 -- Ensure all folds are open by default
-vim.api.nvim_set_keymap('n', '<leader>t', 'za', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader><BS>', 'za', { noremap = true })
 
 -- Supostamente desliga as tabs
 -- vim.g.lazygit_disable_tabline = true
