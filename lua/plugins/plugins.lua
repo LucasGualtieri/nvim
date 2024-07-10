@@ -17,15 +17,11 @@ local plugins = {
 		end,
 	},
 
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		lazy = false
-	},
+	{ "nvim-treesitter/nvim-treesitter-context", lazy = false },
 
-	{
-		"kdheepak/lazygit.nvim",
-		lazy = false
-	},
+	{ "kdheepak/lazygit.nvim", lazy = false },
+
+	{ "ThePrimeagen/vim-be-good", lazy = false },
 
 	{
 		"mbbill/undotree",
@@ -60,11 +56,6 @@ local plugins = {
 			vim.keymap.set("n", "<C-Right>", function() harpoon:list():next() end)
 			vim.keymap.set("n", "<C-Left>", function() harpoon:list():prev() end)
 		end
-	},
-
-	{
-		"ThePrimeagen/vim-be-good",
-		lazy = false
 	},
 
 	{

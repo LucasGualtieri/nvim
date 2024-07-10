@@ -1,3 +1,5 @@
+-- require "nvchad.mappings" -- If anything ever breaks, I should probably check this file
+
 local map = vim.keymap.set
 -- local unmap = vim.api.nvim_del_keymap
 
@@ -128,18 +130,16 @@ end, { desc = "blankline jump to current context" })
 
 local options = { noremap = true, silent = true }
 
--- unmap("n", "gd")
--- map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>zz', options)
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Moves line Up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Moves line Down" })
 
--- Moves line UP and Down
-map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Moves line Up" })
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Moves line Down" })
+map("v", "<S-A-k>", ":'<,'>t'><CR>gv", { desc =  "Move Copies line Up" })
+map("v", "<S-A-j>", ":'<,'>t-1<CR>gv", { desc =  "Move Copies line Down" })
 
--- Copies line UP and Down
-map("v", "<S-A-k>", ":'<,'>t'><CR>gv")
-map("v", "<S-A-j>", ":'<,'>t-1<CR>gv")
+map("v", "<Tab>", ">gv", { desc = "Tab Moves the selected lines 1 tab forward." })
+map("v", "<S-Tab>", "<gv", { desc = "Tab Moves the selected lines 1 tab backward." })
 
-map("n", "J", "mzJ`z", { desc = "Holds the cursor when concatenating lines" })
+map("n", "J", "mzJ`z", { desc = "Concat Holds the cursor when concatenating lines" })
 
 -- Keeps the cursor centered when moving half a page Up or Down
 map("n", "<C-d>", "<C-d>zz")
