@@ -224,8 +224,9 @@ map('n', 'Y', 'Y', options)
 -- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- map("n", "<leader>f", vim.lsp.buf.format)
 
+map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "QuickFix Next file" })
+map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "QuickFix Previous file" })
+
 -- Don't know what these are for
--- map("n", "<C-k>", "<cmd>cnext<CR>zz")
--- map("n", "<C-j>", "<cmd>cprev<CR>zz")
 -- map("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- map("n", "<leader>j", "<cmd>lprev<CR>zz")
