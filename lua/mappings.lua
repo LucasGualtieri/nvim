@@ -145,6 +145,10 @@ map("n", "J", "mzJ`z", { desc = "Concat Holds the cursor when concatenating line
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
+-- Não consegui fazer esses dois funcionar
+-- map("n", "<S-{>", "<S-{>zz")
+-- map("n", "<S-}>", "<S-}>zz")
+
 map("n", "<leader><leader>", function() vim.cmd("so") end)
 
 map("n", "<BS>", "a<BS><Esc>")
