@@ -49,7 +49,7 @@ map("n", "<S-tab>", function()
 	require("nvchad.tabufline").prev()
 end, { desc = "buffer goto prev" })
 
-map("n", "<leader>x", function()
+map("n", "<leader><Del>", function()
 	require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
@@ -130,6 +130,13 @@ end, { desc = "blankline jump to current context" })
 
 local options = { noremap = true, silent = true }
 
+-- I have to study this a bit more
+-- if vim.lsp.inlay_hint then
+-- 	vim.keymap.set('n', '<leader>uh', function()
+-- 		vim.lsp.inlay_hint(0, nil)
+-- 	end, { desc = 'Toggle Inlay Hints' })
+-- end
+
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Moves line Up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Moves line Down" })
 
@@ -181,9 +188,25 @@ map('n', 'y', 'y', options)
 map('v', 'y', 'y', options)
 map('n', 'Y', 'Y', options)
 
+-- These allow search terms to stay in the middle when "scrolling"
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
+-- These allow me to not override the buffer when pasting pasting or deleting
+map("x", "<leader>p", "\"_dP")
+map("n", "<leader>d", "\"_dP")
+map("v", "<leader>d", "\"_dP")
+
+map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "QuickFix Next file" })
+map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "QuickFix Previous file" })
+
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+-- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- Function to toggle line numbers - No needed with NVChad
 -- map("n", "<leader><Tab>", function()
@@ -203,10 +226,6 @@ map('n', 'Y', 'Y', options)
 
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 
--- Don't know what these are for
--- vim.keymap.set("n", "n", "nzzzv")
--- vim.keymap.set("n", "N", "Nzzzv")
-
 -- Not necessary with NVChad
 -- vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 
@@ -217,15 +236,11 @@ map('n', 'Y', 'Y', options)
 -- map("i", "<C-j>", "<Down>")
 -- map("i", "<C-b>", "<C-o>b")
 -- map("i", "<C-Del>", "<C-o>dw")
--- map("i", "<C-BS>", "<Esc>dbi") -- Não consegui fazer funcionar
+-- map("i", "<C-BS>", "<Esc>dbi") -- É só usar o padrão control + w
 
 -- Not sure if I should be using these with NVChad
 -- vim.keymap.set("n", "Q", "<nop>")
--- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- map("n", "<leader>f", vim.lsp.buf.format)
-
-map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "QuickFix Next file" })
-map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "QuickFix Previous file" })
 
 -- Don't know what these are for
 -- map("n", "<leader>k", "<cmd>lnext<CR>zz")

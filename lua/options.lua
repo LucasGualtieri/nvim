@@ -7,7 +7,7 @@ local o = vim.o
 o.cursorlineopt ='both' -- to enable cursorline!
 
 -- This is necessary to separate Vim's "clipboard", to the system's.
--- opt.clipboard = "unnamedplus"
+opt.clipboard = ""
 
 opt.nu = true
 opt.relativenumber = true
