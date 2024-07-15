@@ -137,6 +137,8 @@ local options = { noremap = true, silent = true }
 -- 	end, { desc = 'Toggle Inlay Hints' })
 -- end
 
+map({"n", "v"}, "<leader>y", [["+y]])
+
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Moves line Up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Moves line Down" })
 
@@ -161,11 +163,8 @@ map("n", "<leader><leader>", function() vim.cmd("so") end)
 map("n", "<BS>", "a<BS><Esc>")
 map("n", "<Enter>", "a<Enter><Esc>")
 
-map({"n", "v"}, "<leader>y", [["+y]])
-map("n", "<leader>y", [["+y]])
--- map({"n", "v"}, "<leader>d", [["_d]])
-
 map("i", "<C-c>", "<Esc>")
+-- These were in attempt to exit multi line mode
 -- map("n", "<C-c>", "<Esc>")
 -- map("x", "<C-c>", "<Esc>")
 
@@ -178,35 +177,40 @@ map('n', '<C-p>', '<C-i>zz', options)
 -- Opens a "menu" that allows for replace all occurences of the word under the cursor
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
--- Unmap y from copying to the system clipboard
-map('n', 'y', '"+y', options)
-map('v', 'y', '"+y', options)
-map('n', 'Y', '"+Y', options)
-
--- Remap y to the default yank behavior
-map('n', 'y', 'y', options)
-map('v', 'y', 'y', options)
-map('n', 'Y', 'Y', options)
-
 -- These allow search terms to stay in the middle when "scrolling"
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- These allow me to not override the buffer when pasting pasting or deleting
 map("x", "<leader>p", "\"_dP")
-map("n", "<leader>d", "\"_dP")
-map("v", "<leader>d", "\"_dP")
+map({"n", "v"}, "<leader>d", "\"_d") -- [["_d]]
+map("n", "<leader>ciw", "\"_ciw")
 
 map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "QuickFix Next file" })
 map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "QuickFix Previous file" })
 
+-- These are supposed to navigate throught the location list
+-- map("n", "<leader>k", "<cmd>lnext<CR>zz")
+-- map("n", "<leader>j", "<cmd>lprev<CR>zz")
+
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", options)
+
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
--- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+-- These are not necessary with NVChad
+-- -- Unmap y from copying to the system clipboard
+-- map('n', 'y', '"+y', options)
+-- map('v', 'y', '"+y', options)
+-- map('n', 'Y', '"+Y', options)
+
+-- -- Remap y to the default yank behavior
+-- map('n', 'y', 'y', options)
+-- map('v', 'y', 'y', options)
+-- map('n', 'Y', 'Y', options)
 
 -- Function to toggle line numbers - No needed with NVChad
 -- map("n", "<leader><Tab>", function()
@@ -241,7 +245,3 @@ map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 -- Not sure if I should be using these with NVChad
 -- vim.keymap.set("n", "Q", "<nop>")
 -- map("n", "<leader>f", vim.lsp.buf.format)
-
--- Don't know what these are for
--- map("n", "<leader>k", "<cmd>lnext<CR>zz")
--- map("n", "<leader>j", "<cmd>lprev<CR>zz")

@@ -17,6 +17,8 @@ local plugins = {
 		end,
 	},
 
+	{ "tpope/vim-fugitive", lazy = false },
+
 	{ "nvim-treesitter/nvim-treesitter-context", lazy = false },
 
 	{ "kdheepak/lazygit.nvim", lazy = false },
