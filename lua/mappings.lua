@@ -54,8 +54,8 @@ map("n", "<leader><Del>", function()
 end, { desc = "buffer close" })
 
 -- Comment
-map("n", "<leader>;", "gcc", { desc = "comment toggle", remap = true })
-map("v", "<leader>;", "gc", { desc = "comment toggle", remap = true })
+map("n", "<leader>/", "gcc", { desc = "comment toggle", remap = true })
+map("v", "<leader>/", "gc", { desc = "comment toggle", remap = true })
 
 -- nvimtree
 map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
@@ -68,34 +68,34 @@ map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help 
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
-map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
-map("n", "<leader>fg", "<cmd>Telescope git_files<CR>", { desc = "telescope find git files" })
 map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
+map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+map("n", "<leader>fg", "<cmd>Telescope git_files<CR>", { desc = "telescope find git files" })
 
 -- terminal
 map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
 -- new terminals
-map("n", "<leader>h", function()
-	require("nvchad.term").new { pos = "sp" }
-end, { desc = "terminal new horizontal term" })
+-- map("n", "<leader>h", function()
+-- 	require("nvchad.term").new { pos = "sp" }
+-- end, { desc = "terminal new horizontal term" })
 
-map("n", "<leader>v", function()
-	require("nvchad.term").new { pos = "vsp" }
-end, { desc = "terminal new vertical window" })
+-- map("n", "<leader>v", function()
+-- 	require("nvchad.term").new { pos = "vsp" }
+-- end, { desc = "terminal new vertical window" })
 
 -- toggleable
 map({ "n", "t" }, "<A-v>", function()
 	require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "terminal toggleable vertical term" })
 
-map({ "n", "t" }, "<A-h>", function()
-	require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-end, { desc = "terminal new horizontal term" })
+-- map({ "n", "t" }, "<A-h>", function()
+-- 	require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+-- end, { desc = "terminal new horizontal term" })
 
 map({ "n", "t" }, "<A-i>", function()
 	require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
@@ -163,10 +163,7 @@ map("n", "<leader><leader>", function() vim.cmd("so") end)
 map("n", "<BS>", "a<BS><Esc>")
 map("n", "<Enter>", "a<Enter><Esc>")
 
-map("i", "<C-c>", "<Esc>")
--- These were in attempt to exit multi line mode
--- map("n", "<C-c>", "<Esc>")
--- map("x", "<C-c>", "<Esc>")
+map({ "i", "n", "x" }, "<C-c>", "<Esc>")
 
 map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Opens LazyGit" })
 
@@ -190,12 +187,20 @@ map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "QuickFix Next file" })
 map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "QuickFix Previous file" })
 
 -- These are supposed to navigate throught the location list
--- map("n", "<leader>k", "<cmd>lnext<CR>zz")
--- map("n", "<leader>j", "<cmd>lprev<CR>zz")
+-- It was bound to leader + j and k but I figured I'd never have the two QuickFix lists open at the same time
+map("n", "<leader>j", "<cmd>lnext<CR>zz")
+map("n", "<leader>k", "<cmd>lprev<CR>zz")
 
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", options)
+map("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/nvim/tmux-sessionizer<CR>", options)
+
+map("n", "<leader>zig", "<cmd>LspRestart<cr>")
+map('n', '<Leader>fl', '<cmd>lua vim.diagnostic.open_float()<CR>', options)
+
+map("i", "<C-w>", "<C-o>w")
+map("i", "<C-b>", "<C-o>b")
+map("i", "<C-Del>", "<C-o>dw")
 
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 -- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -231,15 +236,10 @@ map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", options)
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 
 -- Not necessary with NVChad
--- vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
-
--- Not necessary with NVChad
 -- map("i", "<C-h>", "<Left>")
 -- map("i", "<C-l>", "<Right>")
 -- map("i", "<C-k>", "<Up>")
 -- map("i", "<C-j>", "<Down>")
--- map("i", "<C-b>", "<C-o>b")
--- map("i", "<C-Del>", "<C-o>dw")
 -- map("i", "<C-BS>", "<Esc>dbi") -- É só usar o padrão control + w
 
 -- Not sure if I should be using these with NVChad

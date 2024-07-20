@@ -47,7 +47,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-require('nvim-tree').setup({ })
+require('nvim-tree').setup({
+	view = {
+		-- width = 30,
+		-- side = 'left',
+		adaptive_size = true,
+		relativenumber = true,
+		-- mappings = {
+		-- 	list = {
+		-- 		{ key = "l", action = "edit" },
+		-- 		{ key = "h", action = "close_node" },
+		-- 	},
+		-- },
+	},
+})
 
 require'nvim-treesitter.configs'.setup {
 	-- ensure_installed = "maintained", -- Install all maintained parsers

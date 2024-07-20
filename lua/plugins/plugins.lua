@@ -5,12 +5,34 @@ local plugins = {
 
 		opts = function()
 
-			local conf = require "nvchad.configs.telescope"
+			local conf = require("nvchad.configs.telescope")
+			local actions = require('telescope.actions')
+			local action_state = require('telescope.actions.state')
 
 			conf.defaults.mappings.i = {
 				["<C-k>"] = require("telescope.actions").move_selection_previous,
 				["<C-j>"] = require("telescope.actions").move_selection_next,
 				["<Esc>"] = require("telescope.actions").close,
+				["<C-q>"] = function(prompt_bufnr)
+					local picker = action_state.get_current_picker(prompt_bufnr)
+					local multi_selections = picker:get_multi_selection()
+
+					-- Clear the quickfix list first
+					vim.fn.setqflist({}, 'r')
+
+					if not vim.tbl_isempty(multi_selections) then
+						for _, entry in ipairs(multi_selections) do
+							vim.fn.setqflist({}, 'a', {
+								title = entry.value,
+								items = {{filename = entry.filename, lnum = entry.lnum, col = entry.col}}
+							})
+						end
+						actions.close(prompt_bufnr)
+						vim.cmd('copen')
+					else
+						print("No selections made")
+					end
+				end,
 			}
 
 			return conf
