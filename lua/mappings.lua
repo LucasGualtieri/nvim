@@ -198,7 +198,7 @@ map("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/nvim/tmux-sessionizer<CR>", 
 map("n", "<leader>zig", "<cmd>LspRestart<cr>")
 map('n', '<Leader>fl', '<cmd>lua vim.diagnostic.open_float()<CR>', options)
 
-map("i", "<C-w>", "<C-o>w")
+-- map("i", "<C-w>", "<C-o>w")
 map("i", "<C-b>", "<C-o>b")
 map("i", "<C-Del>", "<C-o>dw")
 
