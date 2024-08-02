@@ -1,79 +1,8 @@
+local map = vim.keymap.set
+
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "<S-A-j>", ":'<,'>t-1<CR>gv")
-vim.keymap.set("v", "<S-A-k>", ":'<,'>t'><CR>gv")
-
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
-
-vim.keymap.set("i", "<C-h>", "<Left>")
-vim.keymap.set("i", "<C-l>", "<Right>")
-vim.keymap.set("i", "<C-k>", "<Up>")
-vim.keymap.set("i", "<C-j>", "<Down>")
-vim.keymap.set("i", "<C-b>", "<C-o>b")
-vim.keymap.set("i", "<C-Del>", "<C-o>dw")
-
-vim.keymap.set("n", "<BS>", "a<BS><Esc>")
-vim.keymap.set("n", "<Del>", "a<Del><Esc>")
-vim.keymap.set("n", "<Enter>", "i<Enter><Esc>")
-
--- vim.keymap.set("n", "<C-;>", "gcc")
-
--- vim.api.nvim_set_keymap('i', '<tab>', '<tab>', { noremap = true, silent = true })
-
--- vim.keymap.set("n", "<leader>vwm", function()
---     require("vim-with-me").startvimwithme()
--- end)
--- vim.keymap.set("n", "<leader>svwm", function()
---     require("vim-with-me").stopvimwithme()
--- end)
-
--- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dp]])
-
--- next greatest remap ever : asbjornhaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>y", [["+y]])
-
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
-
--- This is going to get me cancelled
-vim.keymap.set("i", "<C-c>", "<Esc>")
-
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
-
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
--- vim.keymap.set(
--- "n",
--- "<leader>ee",
--- "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
--- )
-
--- vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
--- vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
-
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
-
--- Function to toggle line numbering
-vim.keymap.set("n", "<leader><Tab>", function()
+map("n", "<leader><leader>", function()
 
     if vim.wo.relativenumber == true then
         vim.wo.relativenumber = false
@@ -83,3 +12,39 @@ vim.keymap.set("n", "<leader><Tab>", function()
         vim.wo.number = true
     end
 end)
+
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- vim.api.nvim_set_keymap('n', '<S-A-f>', ':call VSCodeNotify("workbench.action.quickOpen")<CR>', { noremap = true, silent = true })
+
+-- vim.api.nvim_set_keymap('n', '<leader>ff', ':call VSCodeNotify("find-it-faster.findFiles")<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>fw', ':call VSCodeNotify("find-it-faster.findWithinFiles")<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>fz', ':call VSCodeNotify("find-it-faster.findFilesWithType")<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>ca', ':call VSCodeNotify("editor.action.quickFix")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sa', ':call VSCodeNotify("editor.action.sourceAction")<CR>', { noremap = true, silent = true })
+
+map("n", "<C-a>", "<cmd>normal! ggVG<CR>", { desc = "select whole file" })
+
+-- map("n", "<leader><leader>", function() vim.cmd("so") end)
+
+map("n", "<BS>", "a<BS><Esc>")
+map("n", "<Enter>", "a<Enter><Esc>")
+
+-- Opens a "menu" that allows for replace all occurences of the word under the cursor
+-- map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+-- These allow search terms to stay in the middle when "scrolling"
+-- map("n", "n", "nzzzv")
+-- map("n", "N", "Nzzzv")
+
+-- These allow me to not override the buffer when pasting pasting or deleting
+map("x", "<leader>p", "\"_dP")
+map({"n", "v"}, "<leader>d", "\"_d") -- [["_d]]
+map("n", "<leader>ciw", "\"_ciw")
+map({"n", "v"}, "<leader>y", [["+y]])
+
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+map("n", "J", "mzJ`z", { desc = "Concat Holds the cursor when concatenating lines" })
