@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+-- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 local map = vim.keymap.set
@@ -37,16 +37,24 @@ map("n", "N", "Nzzzv")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
+-- Really important buffer remaps
+
+map('v', 'c', '"_c')
+
 map({ "n", "v" }, "<leader>y", '"+y')
-map({ "n", "v" }, "<leader>Y", '"+y')
+-- map({ "n", "v" }, "<leader>Y", '"+y')
 
 map({ "n", "v" }, "<leader>d", '"_d')
-map({ "n", "v" }, "<leader>D", '"_d')
+-- map({ "n", "v" }, "<leader>D", '"_d')
 
-map("n", "<leader>ciw", "ciw")
 map("n", "ciw", '"_ciw', options)
+map("n", "<leader>ciw", "ciw")
 
--- whichkey
+map("x", "p", '"_dP')
+map("x", "<leader>p", "p")
+
+-- -----------------------------------------
+
 map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
 
 -- Function to toggle line numbers - No needed with NVChad
@@ -62,11 +70,12 @@ end)
 
 map("n", "<leader><Tab>", function()
 	vim.cmd("so")
+	print "File sourced!"
 end)
 
 map({ "i", "n", "x" }, "<C-c>", "<Esc>")
 
-vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", options)
+map("n", "<C-s>", ":w<CR>", options)
 
 map("n", "<BS>", "a<BS><Esc>")
 map("n", "<Enter>", "a<Enter><Esc>")

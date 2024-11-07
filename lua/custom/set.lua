@@ -5,20 +5,23 @@ local o = vim.o
 -- vim.opt.list = true
 -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+vim.opt.laststatus = 3      -- Use a single global status line (good for custom status lines)
+vim.opt.showmode = false    -- Disable default mode indicator
+
 function ColorMyPencils(color)
-	color = color or "rose-pine"
+	color = color or "dracula"
 	vim.cmd.colorscheme(color)
 
 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
-ColorMyPencils()
+ColorMyPencils("dracula")
 
 o.cursorlineopt = "both" -- to enable cursorline!
 
 -- This is necessary to separate Vim's "clipboard", to the system's.
--- opt.clipboard = ""
+opt.clipboard = "unnamedplus"
 
 opt.nu = true
 opt.relativenumber = true
