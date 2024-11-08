@@ -160,11 +160,11 @@ return {
 
 			-- Change diagnostic symbols in the sign column (gutter)
 			-- if vim.g.have_nerd_font then
-			--   local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-			--   for type, icon in pairs(signs) do
-			--     local hl = 'DiagnosticSign' .. type
-			--     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-			--   end
+				local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+				for type, icon in pairs(signs) do
+					local hl = 'DiagnosticSign' .. type
+					vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+				end
 			-- end
 
 			-- LSP servers and clients are able to communicate to each other what features they support.
@@ -184,7 +184,10 @@ return {
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				clangd = {},
+				clangd = {
+					-- cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+					init_options = { fallbackFlags = { '-std=c++23' }, },
+				},
 				jdtls = {},
 				-- gopls = {},
 				-- pyright = {},
