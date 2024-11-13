@@ -8,6 +8,18 @@ local o = vim.o
 vim.opt.laststatus = 3      -- Use a single global status line (good for custom status lines)
 vim.opt.showmode = false    -- Disable default mode indicator
 
+-- Automatically save folds when exiting
+vim.api.nvim_create_autocmd("BufWinLeave", {
+	pattern = "*",
+	command = "silent! mkview",
+})
+
+-- Automatically load folds when opening
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	pattern = "*",
+	command = "silent! loadview",
+})
+
 function ColorMyPencils(color)
 	color = color or "dracula"
 	vim.cmd.colorscheme(color)

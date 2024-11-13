@@ -6,7 +6,9 @@ int main() {
 
 	cout << "Hello world!" << endl;
 
-	if (true) { }
+	if (true) {
+		cout << ";lskjdhf" << endl;
+	}
 
 	else if (true) { }
 
