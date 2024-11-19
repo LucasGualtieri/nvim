@@ -3,16 +3,20 @@ local o = vim.o
 -- local g = vim.g
 
 -- vim.opt.list = true
--- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars:append({
+--     trail = '·', -- Show trailing spaces as '·'
+--     nbsp = '␣',  -- Show non-breaking spaces
+-- 	-- tab = '| ', -- Show tabs as '| '
+-- })
 
 vim.opt.laststatus = 3      -- Use a single global status line (good for custom status lines)
 vim.opt.showmode = false    -- Disable default mode indicator
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "cpp",
-    callback = function()
-        vim.opt_local.commentstring = "// %s"
-    end,
+	pattern = "cpp",
+	callback = function()
+		vim.opt_local.commentstring = "// %s"
+	end,
 })
 
 -- Automatically save folds when exiting

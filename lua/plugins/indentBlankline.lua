@@ -1,7 +1,7 @@
 return {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    --@module "ibl"
-    --@type ibl.config
-    opts = {},
+	'lukas-reineke/indent-blankline.nvim',
+	-- Enable `lukas-reineke/indent-blankline.nvim`
+	-- See `:help ibl`
+	main = 'ibl',
+	opts = {},
 }

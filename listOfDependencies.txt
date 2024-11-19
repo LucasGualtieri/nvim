@@ -1,0 +1,3 @@
+fzf for the tmux script
+https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation // grep (acho que ja vem baixado)
+tmux (tabem acho que ja vem baixado)

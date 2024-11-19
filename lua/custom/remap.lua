@@ -5,10 +5,13 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 local map = vim.keymap.set
 local options = { noremap = true, silent = true }
 
-map("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+map("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/nvim/tmux-sessionizer<CR>", options)
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+-- map("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+-- map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+-- map("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+-- map("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Moves line Up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Moves line Down" })
