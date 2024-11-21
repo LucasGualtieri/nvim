@@ -186,7 +186,10 @@ return {
 			local servers = {
 				clangd = {
 					-- cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-					init_options = { fallbackFlags = { '-std=c++23' }, },
+					init_options = { fallbackFlags = {
+						'-std=c++23', -- For C++ files
+						-- '-std=c17',   -- For C files
+					}, },
 				},
 				jdtls = {},
 				-- gopls = {},

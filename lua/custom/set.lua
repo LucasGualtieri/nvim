@@ -9,11 +9,16 @@ local o = vim.o
 -- 	-- tab = '| ', -- Show tabs as '| '
 -- })
 
+-- These two are for flash.lua
+-- Make search case insensitive
+vim.opt.ignorecase = true   -- Ignore case in search patterns
+vim.opt.smartcase = true    -- Override ignorecase if search pattern contains uppercase letters
+
 vim.opt.laststatus = 3      -- Use a single global status line (good for custom status lines)
 vim.opt.showmode = false    -- Disable default mode indicator
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "cpp",
+	pattern = { "cpp", "c" },
 	callback = function()
 		vim.opt_local.commentstring = "// %s"
 	end,

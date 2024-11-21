@@ -83,8 +83,6 @@ map("n", "<C-s>", ":w<CR>", options)
 map("n", "<BS>", "a<BS><Esc>")
 map("n", "<Enter>", "a<Enter><Esc>")
 
-map("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/nvim/tmux-sessionizer<CR>", options)
-
 -- map("n", "<leader>f", function()
 -- 	vim.lsp.buf.format()
 -- end
