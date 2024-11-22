@@ -1,5 +1,4 @@
 def main():
-    print("a;lskjdf")
-    print "a;lskjdf"
+    print("Hello World!")
 
 main()

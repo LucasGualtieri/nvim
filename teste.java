@@ -1,16 +1,8 @@
 public class teste {
 
 	public static void main(String[] args) {
-
-		System.out.println("teste");
+		System.out.println(foo());
 	}
 
-	private int foo() {
-
-		if (true) {
-			int x = 1;
-		}
-
-		return 1;
-	}
+	private static int foo() { return 0; }
 }
