@@ -1,3 +1,4 @@
 fzf for the tmux script
 https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation // grep (acho que ja vem baixado)
 tmux (tabem acho que ja vem baixado)
+// golang for the new color preview - This ended up not working, the one I'm using is nice but it seems to sometimes not render

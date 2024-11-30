@@ -15,5 +15,9 @@ return {
 				html = { mode = 'foreground'; }
 			}
 		end
-	}
+	},
+	-- {
+	-- 	"RRethy/vim-hexokinase",
+	-- 	build = 'make hexokinase',
+	-- }
 }
