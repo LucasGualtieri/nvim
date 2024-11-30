@@ -18,7 +18,7 @@ vim.opt.laststatus = 3      -- Use a single global status line (good for custom 
 vim.opt.showmode = false    -- Disable default mode indicator
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "cpp", "c" },
+	pattern = { "cpp", "" },
 	callback = function()
 		vim.opt_local.commentstring = "// %s"
 	end,
@@ -36,15 +36,15 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	command = "silent! loadview",
 })
 
-function ColorMyPencils(color)
-	color = color or "dracula"
-	vim.cmd.colorscheme(color)
+-- function ColorMyPencils(color)
+-- 	color = color or "dracula"
+-- 	vim.cmd.colorscheme(color)
+--
+-- 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- 	-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- end
 
-	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-end
-
-ColorMyPencils("dracula")
+-- ColorMyPencils("dracula")
 
 o.cursorlineopt = "both" -- to enable cursorline!
 

@@ -16,19 +16,20 @@ return {
 	-- 		vim.cmd.hi("Comment gui=none")
 	-- 	end,
 	-- },
-	{ "rose-pine/neovim", name = "rose-pine" },
-	{
-		-- add dracula
-		{ "Mofiqul/dracula.nvim" },
 
-		-- Configure LazyVim to load dracula
-		-- {
-		-- 	"LazyVim/LazyVim",
-		-- 	opts = {
-		-- 		colorscheme = "dracula",
-		-- 	},
-		-- },
-	},
+	-- { "rose-pine/neovim", name = "rose-pine" },
+	-- {
+	-- 	-- add dracula
+	-- 	{ "Mofiqul/dracula.nvim" },
+	--
+	-- 	-- Configure LazyVim to load dracula
+	-- 	-- {
+	-- 	-- 	"LazyVim/LazyVim",
+	-- 	-- 	opts = {
+	-- 	-- 		colorscheme = "dracula",
+	-- 	-- 	},
+	-- 	-- },
+	-- },
 
 	-- {
 	-- 	"askfiy/visual_studio_code",
