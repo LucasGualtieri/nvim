@@ -4,9 +4,9 @@ local o = vim.o
 
 -- vim.opt.list = true
 -- vim.opt.listchars:append({
---     trail = '·', -- Show trailing spaces as '·'
---     nbsp = '␣',  -- Show non-breaking spaces
--- 	-- tab = '| ', -- Show tabs as '| '
+-- 	trail = '·', -- Show trailing spaces as '·'
+-- 	nbsp = '␣',  -- Show non-breaking spaces
+-- 	tab = '▏ ', -- Show tabs as '| '
 -- })
 
 -- These two are for flash.lua
