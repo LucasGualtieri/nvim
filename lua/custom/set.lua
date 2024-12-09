@@ -18,7 +18,7 @@ vim.opt.laststatus = 3      -- Use a single global status line (good for custom 
 vim.opt.showmode = false    -- Disable default mode indicator
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "cpp", "" },
+	pattern = { "cpp", "c" },
 	callback = function()
 		vim.opt_local.commentstring = "// %s"
 	end,
