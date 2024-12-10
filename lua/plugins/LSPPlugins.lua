@@ -185,11 +185,18 @@ return {
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				clangd = {
-					-- cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-					init_options = { fallbackFlags = {
-						'-std=c++23', -- For C++ files
-						'-std=c17',   -- For C files
-					}, },
+					cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+					on_new_config = function(new_config, root_dir)
+						local fallbackFlags = {}
+						if vim.bo.filetype == "cpp" then
+							fallbackFlags = { '-std=c++23' }
+						elseif vim.bo.filetype == "c" then
+							fallbackFlags = { '-std=c17' }
+						end
+						new_config.init_options = {
+							fallbackFlags = fallbackFlags
+						}
+					end,
 				},
 				jdtls = {},
 				-- gopls = {},
