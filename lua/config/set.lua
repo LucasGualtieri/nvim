@@ -2,12 +2,12 @@ local opt = vim.opt
 
 -- local g = vim.g
 
-vim.opt.list = true
-vim.opt.listchars:append({
-	trail = '·', -- Show trailing spaces as '·'
-	nbsp = '␣',  -- Show non-breaking spaces
-	tab = '▏ ', -- Show tabs as '| '
-})
+-- vim.opt.list = true
+-- vim.opt.listchars:append({
+-- 	trail = '·', -- Show trailing spaces as '·'
+-- 	nbsp = '␣',  -- Show non-breaking spaces
+-- 	tab = '▏ ', -- Show tabs as '| '
+-- })
 
 -- These two are for flash.lua
 -- Make search case insensitive
