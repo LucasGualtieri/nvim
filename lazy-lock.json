@@ -14,6 +14,7 @@
   "mini.comment": { "branch": "main", "commit": "fb867a9246f9b892cf51a8c84a3f8479cdf1558c" },
   "mini.indentscope": { "branch": "main", "commit": "8af2569a7d7fd37300dfa760e44e71efbbf322fd" },
   "mini.move": { "branch": "main", "commit": "4fe4a855fee53c66b0f3255a4b54ddc2ae6b308c" },
+  "mini.trailspace": { "branch": "main", "commit": "39a0460c025a605519fdd6bea1ce870642429996" },
   "nvim-autopairs": { "branch": "master", "commit": "2647cce4cb64fb35c212146663384e05ae126bdf" },
   "nvim-cmp": { "branch": "main", "commit": "b5311ab3ed9c846b585c0c15b7559be131ec4be9" },
   "nvim-lspconfig": { "branch": "master", "commit": "69a1624aff5dc30dddd0c59d99a947b63c80bf2a" },

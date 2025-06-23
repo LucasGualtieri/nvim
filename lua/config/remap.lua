@@ -70,10 +70,16 @@ vim.keymap.set("n", "<leader><Tab>", function()
 	end
 end, { desc = "Source Lua file" })
 
-vim.keymap.set("n", "<C-s>", function()
-	vim.cmd.write()
-	vim.notify("File saved!", vim.log.levels.INFO)
-end, { desc = "Save file and notify" })
+vim.keymap.set(
+	"n", "<C-s>",
+	function()
+		vim.cmd.write()
+		vim.notify("File saved!", vim.log.levels.INFO)
+		MiniTrailspace.trim_last_lines()
+		MiniTrailspace.trim()
+	end,
+	{ desc = "Save file and notify" }
+)
 
 -- NOTE: These conflict with the snippets 'next'
 -- map("i", "<C-h>", "<Left>")
