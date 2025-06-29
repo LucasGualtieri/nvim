@@ -57,8 +57,8 @@ return {
 					-- this supports the same val table as vim.api.nvim_set_hl
 					-- use colors from this colorscheme by requiring vscode.colors!
 					Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-					["@keyword.operator"] = { fg = c.vscPink, bold = true },  -- color for `new` and `delete`
-					["@keyword.directive"] = { fg = c.vscPink, bold = true },
+					["@keyword.operator"] = { fg = c.vscPink, bold = false },  -- color for `new` and `delete`
+					["@keyword.directive"] = { fg = c.vscPink, bold = false },
 					["@string.escape"] = { fg = "#D7BA7D", bold = true },
 				}
 			})
