@@ -13,6 +13,9 @@ local options = { noremap = true, silent = true }
 -- map("v", "<Tab>", ">gv", { desc = "Tab Moves the selected lines 1 tab forward." })
 -- map("v", "<S-Tab>", "<gv", { desc = "Tab Moves the selected lines 1 tab backward." })
 
+-- map('n', '<C-S-K>', '<C-y>', options)
+-- map('n', '<C-S-J>', '<C-e>', options)
+
 map("v", "<S-A-K>", ":'<,'>t'><CR>gv", { desc = "Copy selection up" })
 map("v", "<S-A-J>", ":'<,'>t-1<CR>gv", { desc = "Copy selection down" })
 
@@ -75,8 +78,10 @@ vim.keymap.set(
 	function()
 		vim.cmd.write()
 		vim.notify("File saved!", vim.log.levels.INFO)
-		MiniTrailspace.trim_last_lines()
-		MiniTrailspace.trim()
+		if vim.bo.filetype ~= 'oil' then
+			MiniTrailspace.trim_last_lines()
+			MiniTrailspace.trim()
+		end
 	end,
 	{ desc = "Save file and notify" }
 )

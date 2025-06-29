@@ -29,6 +29,31 @@ return {
 					require('telescope.themes').get_dropdown(),
 				},
 			},
+
+			defaults = {
+				layout_strategy = "horizontal", -- or "vertical", "flex", etc.
+				layout_config = {
+					horizontal = {
+						prompt_position = "top",       -- or "bottom"
+						preview_width = 0.6,           -- % of total width
+						results_width = 0.4,           -- optional
+					},
+					vertical = {
+						mirror = false,                -- true = preview above
+						preview_height = 0.5,          -- % of total height
+					},
+					center = {
+						height = 0.5,
+						width = 0.5,
+						preview_cutoff = 40,           -- disables preview when < cutoff
+					},
+					flex = {
+						flip_columns = 120,            -- horizontal when wider than this
+					},
+				},
+				sorting_strategy = "ascending", -- prompt at top (or descending)
+				winblend = 10, -- transparency, optional
+			}
 		}
 
 		-- Enable Telescope extensions if they are installed

@@ -7,13 +7,18 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
 	-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 	lazy = false,
+	-- vim.keymap.set("n", "-", require("oil").toggle_float),
 	vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }),
 
 	config = function()
+
+
 		require("oil").setup({
+
 			-- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
 			-- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
 			default_file_explorer = true,
+
 			-- Id is automatically added at the beginning, and name at the end
 			-- See :help oil-columns
 			columns = {
@@ -22,11 +27,13 @@ return {
 				-- "size",
 				-- "mtime",
 			},
+
 			-- Buffer-local options to use for oil buffers
 			buf_options = {
 				buflisted = false,
 				bufhidden = "hide",
 			},
+
 			-- Window-local options to use for oil buffers
 			win_options = {
 				wrap = false,
@@ -38,17 +45,22 @@ return {
 				conceallevel = 3,
 				concealcursor = "nvic",
 			},
+
 			-- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
 			delete_to_trash = false,
+
 			-- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
 			skip_confirm_for_simple_edits = false,
+
 			-- Selecting a new/moved/renamed file or directory will prompt you to save changes first
 			-- (:help prompt_save_on_select_new_entry)
 			prompt_save_on_select_new_entry = true,
+
 			-- Oil will automatically delete hidden buffers after this delay
 			-- You can set the delay to false to disable cleanup entirely
 			-- Note that the cleanup process only starts when none of the oil buffers are currently displayed
 			cleanup_delay_ms = 2000,
+
 			lsp_file_methods = {
 				-- Enable or disable LSP file operations
 				enabled = true,
@@ -58,11 +70,14 @@ return {
 				-- Set to "unmodified" to only save unmodified buffers
 				autosave_changes = false,
 			},
+
 			-- Constrain the cursor to the editable parts of the oil buffer
 			-- Set to `false` to disable, or "name" to keep it on the file names
 			constrain_cursor = "editable",
+
 			-- Set to true to watch the filesystem for changes and reload oil
 			watch_for_changes = false,
+
 			-- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
 			-- options with a `callback` (e.g. { callback = function() ... end, desc = "", mode = "n" })
 			-- Additionally, if it is a string that matches "actions.<name>",
@@ -89,7 +104,9 @@ return {
 			},
 			-- Set to false to disable all of the above keymaps
 			use_default_keymaps = false,
+
 			view_options = {
+
 				-- Show files and directories that start with "."
 				show_hidden = true,
 				-- This function defines what is considered a "hidden" file
@@ -117,8 +134,10 @@ return {
 					return nil
 				end,
 			},
+
 			-- Extra arguments to pass to SCP when moving/copying files over SSH
 			extra_scp_args = {},
+
 			-- EXPERIMENTAL support for performing file operations with git
 			git = {
 				-- Return true to automatically git add/mv/rm files
@@ -132,17 +151,16 @@ return {
 					return false
 				end,
 			},
+
 			-- Configuration for the floating window in oil.open_float
 			float = {
 				-- Padding around the floating window
 				padding = 2,
 				-- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-				max_width = 0,
-				max_height = 0,
+				max_width = .7,
+				max_height = .8,
 				border = "rounded",
-				win_options = {
-					winblend = 0,
-				},
+				win_options = { winblend = 0 },
 				-- optionally override the oil buffers window title with custom function: fun(winid: integer): string
 				get_win_title = nil,
 				-- preview_split: Split direction: "auto", "left", "right", "above", "below".
@@ -153,6 +171,7 @@ return {
 					return conf
 				end,
 			},
+
 			-- Configuration for the file preview window
 			preview_win = {
 				-- Whether the preview window is automatically updated when the cursor is moved
@@ -166,6 +185,7 @@ return {
 				-- Window-local options to use for preview window buffers
 				win_options = {},
 			},
+
 			-- Configuration for the floating action confirmation window
 			confirmation = {
 				-- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -185,10 +205,9 @@ return {
 				-- optionally define an integer/float for the exact height of the preview window
 				height = nil,
 				border = "rounded",
-				win_options = {
-					winblend = 0,
-				},
+				win_options = { winblend = 0 },
 			},
+
 			-- Configuration for the floating progress window
 			progress = {
 				max_width = 0.9,
@@ -199,18 +218,14 @@ return {
 				height = nil,
 				border = "rounded",
 				minimized_border = "none",
-				win_options = {
-					winblend = 0,
-				},
+				win_options = { winblend = 0 },
 			},
+
 			-- Configuration for the floating SSH window
-			ssh = {
-				border = "rounded",
-			},
+			ssh = { border = "rounded" },
+
 			-- Configuration for the floating keymaps help window
-			keymaps_help = {
-				border = "rounded",
-			},
+			keymaps_help = { border = "rounded" },
 		})
 	end
 }

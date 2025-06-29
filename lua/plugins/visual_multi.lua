@@ -2,7 +2,7 @@ return {
 
 	"mg979/vim-visual-multi",
 
-	init = function()      
+	init = function()
 
 		-- Desativa os mapeamentos padrão do plugin
 		vim.g.VM_default_mappings = 0

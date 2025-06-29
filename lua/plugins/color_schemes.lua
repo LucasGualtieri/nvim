@@ -18,7 +18,7 @@ return {
 	-- 		vim.cmd("colorscheme dracula")
 	-- 	end
 	-- }
-	
+
 	{
 		"Mofiqul/vscode.nvim",
 
