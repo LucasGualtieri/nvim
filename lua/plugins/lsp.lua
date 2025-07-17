@@ -63,6 +63,17 @@ return {
 				on_attach = on_attach,
 			}
 
+			require('lspconfig').elixirls.setup {
+				on_attach = on_attach,
+				cmd = { os.getenv("HOME") .. "/.local/elixir-ls/language_server.sh" },
+				settings = {
+					elixirLS = {
+						dialyzerEnabled = false,
+						fetchDeps = false
+					}
+				}
+			}
+
 			require('lspconfig').clangd.setup {
 
 				on_attach = on_attach,

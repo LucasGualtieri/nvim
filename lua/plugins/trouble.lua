@@ -50,3 +50,7 @@ return {
 		},
 	},
 }
+
+-- NOTE:
+-- Mission, be able to use trouble + quickfix to efficiently change all the #ifndef's
+-- It has to be pretty and elegantly efficient

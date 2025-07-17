@@ -14,7 +14,7 @@ return {
 	},
 
 	{
-		'echasnovski/mini.indentscope', version = '*',
+		'LucasGualtieri/mini.indentscope', version = '*',
 
 		config = function()
 
@@ -33,8 +33,16 @@ return {
 				options = {
 					border = 'top',
 					indent_at_cursor = false,
+					try_as_border = true
 				},
 			})
 		end,
+
+		-- vim.api.nvim_create_autocmd("filetype", {
+		-- 	pattern = { "help", "markdown", "text" },
+		-- 	callback = function()
+		-- 		vim.b.miniindentscope_disable = true
+		-- 	end,
+		-- })
 	},
 }

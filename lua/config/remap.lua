@@ -5,7 +5,7 @@ local map = vim.keymap.set
 local options = { noremap = true, silent = true }
 
 -- map("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/nvim/tmux-sessionizer<CR>", options)
--- map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- map("v", "K", ":m '<-2<cr>gv=gv", { desc = "move moves line up" })
 -- map("v", "J", ":m '>+1<cr>gv=gv", { desc = "move moves line down" })
@@ -93,8 +93,20 @@ vim.keymap.set(
 -- map("i", "<C-j>", "<Down>")
 
 -- Quickfix navigation
--- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
--- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+-- NOTE: Me questiono se isso é necessário, assumindo que vou conseguir usar bem o trouble para navegação de quickfix list
+-- Esse comando em tese é comportamento padrão, mas não estava funcionando.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "qf",
+	callback = function()
+		-- Map <CR> para abrir o item da quickfix corretamente
+		vim.keymap.set("n", "<CR>", "<CR>", { buffer = true, silent = true })
+	end,
+})
+
+vim.keymap.set("n", "<S-M-j>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<S-M-k>", "<cmd>cprev<CR>zz")
+
+-- Location list navigation
 -- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
