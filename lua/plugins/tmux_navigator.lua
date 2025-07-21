@@ -1,5 +1,7 @@
 return {
+
 	'alexghergh/nvim-tmux-navigation',
+	cond = not vim.g.vscode,
 
 	config = function()
 

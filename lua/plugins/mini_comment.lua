@@ -1,6 +1,7 @@
 return {
 
 	'echasnovski/mini.comment', version = '*',
+	cond = not vim.g.vscode,
 
 	config = function()
 		require("mini.comment").setup({

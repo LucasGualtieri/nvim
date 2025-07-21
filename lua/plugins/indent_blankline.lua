@@ -2,6 +2,7 @@ return {
 
 	{
 		'lukas-reineke/indent-blankline.nvim',
+		cond = not vim.g.vscode,
 
 		main = 'ibl', opts = {},
 
@@ -15,6 +16,7 @@ return {
 
 	{
 		'LucasGualtieri/mini.indentscope', version = '*',
+		cond = not vim.g.vscode,
 
 		config = function()
 

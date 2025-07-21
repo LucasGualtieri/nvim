@@ -4,6 +4,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		branch = 'master',
 		lazy = false, build = ":TSUpdate",
+		cond = not vim.g.vscode,
 
 		config = function()
 

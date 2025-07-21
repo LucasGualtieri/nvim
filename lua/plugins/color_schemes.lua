@@ -21,6 +21,7 @@ return {
 
 	{
 		"Mofiqul/vscode.nvim",
+		cond = not vim.g.vscode,
 
 		config = function ()
 

@@ -1,5 +1,8 @@
 return {
+
 	"chrisgrieser/nvim-origami",
+	cond = not vim.g.vscode,
+
 	event = "VeryLazy",
 	opts = {}, -- needed even when using default config
 

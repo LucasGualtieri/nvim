@@ -1,6 +1,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		cond = not vim.g.vscode,
 
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -34,26 +35,22 @@ return {
 			end
 
 			-- if vim.g.have_nerd_font then
-				vim.diagnostic.config({
-					virtual_text = {
-						-- spacing = 4,
-						-- prefix = "●", -- Change this to suit your theme
-						current_line = false;
-					},
-					signs = {
-						text = {
-							[vim.diagnostic.severity.ERROR] = " ",
-							[vim.diagnostic.severity.WARN] = " ",
-							[vim.diagnostic.severity.HINT] = " ",
-							[vim.diagnostic.severity.INFO] = " ",
-						}
-					},
-				})
-			-- end
-
 			vim.diagnostic.config({
-				virtual_text = true, -- true could be replaced by { current_line = true }
+				-- underline = true,
+				-- update_in_insert = false,
+				virtual_text = {
+					-- spacing = 4,
+					-- prefix = "●", -- Change this to suit your theme
+					current_line = false;
+				},
+				signs = { text = {
+					[vim.diagnostic.severity.ERROR] = " ",
+					[vim.diagnostic.severity.WARN] = " ",
+					[vim.diagnostic.severity.HINT] = " ",
+					[vim.diagnostic.severity.INFO] = " ",
+				} },
 			})
+			-- end
 
 			require('lspconfig').lua_ls.setup {
 				on_attach = on_attach,
@@ -177,6 +174,8 @@ return {
 	{
 
 		"hrsh7th/nvim-cmp",
+		cond = not vim.g.vscode,
+
 		event = "InsertEnter",
 		dependencies = {
 

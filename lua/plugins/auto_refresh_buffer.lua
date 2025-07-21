@@ -1,4 +1,4 @@
 return {
-	"sindrets/diffview.nvim",
+	"djoshea/vim-autoread",
 	cond = not vim.g.vscode,
 }

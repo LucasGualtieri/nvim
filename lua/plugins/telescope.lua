@@ -3,6 +3,7 @@ return {
 	'nvim-telescope/telescope.nvim',
 	event = 'VimEnter',
 	branch = '0.1.x',
+	cond = not vim.g.vscode,
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',

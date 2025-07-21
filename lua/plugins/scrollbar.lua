@@ -1,6 +1,8 @@
+-- Don't think it makes sense with the minimap plugin
 return {
-	"petertriho/nvim-scrollbar",
-	config = function()
-		require("scrollbar").setup({})
-	end,
+	-- "petertriho/nvim-scrollbar",
+	-- cond = not vim.g.vscode,
+	-- config = function()
+	-- 	require("scrollbar").setup({})
+	-- end,
 }
