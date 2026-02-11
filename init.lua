@@ -1,7 +1,7 @@
 require("config.lazy")
 require("config")
 
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = false
 
 if vim.g.vscode then
 	print("Running in VSCode")

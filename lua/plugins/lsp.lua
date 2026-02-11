@@ -18,31 +18,23 @@ return {
 
 		config = function()
 
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			-- 1. Setup Capabilities
+			local capabilities = vim.lsp.protocol.make_client_capabilities() -- [cite: 705]
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+			-- 2. Define on_attach (Optional: Consider moving entirely to LspAttach autocmd)
 			local on_attach = function(_, bufnr)
-
-				-- Enable inlay hints for this buffer (Neovim 0.10+)
 				if vim.lsp.inlay_hint then
-					vim.lsp.inlay_hint.enable(false)
+					vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) -- [cite: 549]
 				end
-
-				-- Optional keybinding to toggle inlay hints
 				vim.keymap.set("n", "<leader>ih", function()
-					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }))
+					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
 				end, { buffer = bufnr, desc = "Toggle Inlay Hints" })
 			end
 
-			-- if vim.g.have_nerd_font then
+			-- 3. Configure Diagnostics
 			vim.diagnostic.config({
-				-- underline = true,
-				-- update_in_insert = false,
-				virtual_text = {
-					-- spacing = 4,
-					-- prefix = "●", -- Change this to suit your theme
-					current_line = false;
-				},
+				virtual_text = { current_line = false },
 				signs = { text = {
 					[vim.diagnostic.severity.ERROR] = " ",
 					[vim.diagnostic.severity.WARN] = " ",
@@ -50,20 +42,27 @@ return {
 					[vim.diagnostic.severity.INFO] = " ",
 				} },
 			})
-			-- end
 
-			require('lspconfig').lua_ls.setup {
-				on_attach = on_attach,
+			-- 4. Define Server Configurations (Native Method) [cite: 7, 32]
+
+			-- Lua LS
+			vim.lsp.config.lua_ls = {
+				on_attach = on_attach, -- [cite: 355]
+				capabilities = capabilities, -- [cite: 315]
 			}
 
-			require('lspconfig').pyright.setup {
+			-- Pyright
+			vim.lsp.config.pyright = {
 				on_attach = on_attach,
+				capabilities = capabilities,
 			}
 
-			require('lspconfig').elixirls.setup {
+			-- Elixir LS
+			vim.lsp.config.elixirls = {
 				on_attach = on_attach,
-				cmd = { os.getenv("HOME") .. "/.local/elixir-ls/language_server.sh" },
-				settings = {
+				capabilities = capabilities,
+				cmd = { os.getenv("HOME") .. "/.local/elixir-ls/language_server.sh" }, -- [cite: 319]
+				settings = { -- [cite: 368]
 					elixirLS = {
 						dialyzerEnabled = false,
 						fetchDeps = false
@@ -71,100 +70,58 @@ return {
 				}
 			}
 
-			require('lspconfig').clangd.setup {
-
+			-- Clangd
+			vim.lsp.config.clangd = {
 				on_attach = on_attach,
-
+				capabilities = capabilities,
 				cmd = { 'clangd', '--background-index', '--clang-tidy' },
-				on_new_config = function(new_config, root_dir)
+				-- 'on_new_config' is deprecated. Use 'before_init' to modify params dynamically
+				before_init = function(params, config)
+					local root_dir = config.root_dir -- [cite: 367]
+					if not root_dir then return end
+
 					local has_ccjson = require("plenary.path"):new(root_dir .. "/compile_commands.json"):exists()
 
 					if not has_ccjson then
-						-- Define flags baseados na extensão do arquivo principal aberto
 						local filename = vim.api.nvim_buf_get_name(0)
+						local fallback_flag = "-std=c++23" -- default
+
 						if filename:match("%.c$") then
-							new_config.init_options = {
-								fallbackFlags = { "-std=c17" }
-							}
-						elseif filename:match("%.cpp$") or filename:match("%.cc$") or filename:match("%.cxx$") then
-							new_config.init_options = {
-								fallbackFlags = { "-std=c++23" }
-							}
-						else
-							new_config.init_options = {
-								fallbackFlags = { "-std=c++23" } -- padrão genérico
-							}
+							fallback_flag = "-std=c17"
 						end
+
+						-- Inject into initializationOptions
+						params.initializationOptions = {
+							fallbackFlags = { fallback_flag }
+						}
 					end
 				end,
 			}
 
-			vim.api.nvim_create_autocmd("LspAttach", {
+			-- 5. Enable the servers [cite: 205]
+			vim.lsp.enable({ 'lua_ls', 'pyright', 'elixirls', 'clangd' })
 
+			-- 6. LspAttach Autocommand (Kept from your original code)
+			vim.api.nvim_create_autocmd("LspAttach", { -- [cite: 117]
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-
 				callback = function(event)
-
 					local map = function(keys, func, desc, mode)
 						mode = mode or "n"
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame") -- [cite: 489]
 					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-					-- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-
+					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" }) -- [cite: 430]
 					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
 					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 					map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
 					vim.keymap.set("n", "<leader>fl", function()
 						vim.diagnostic.open_float(nil, { focusable = true })
 					end, { noremap = true, silent = true, desc = "LSP: Float diagnostics" })
-
-					-- 💡 Disable semantic tokens for clangd to better integrate the VSCode theme. Não é mais necessário.
-					-- local client = vim.lsp.get_client_by_id(event.data.client_id)
-					-- if client and client.name == "clangd" and client.server_capabilities.semanticTokensProvider then
-					-- 	client.server_capabilities.semanticTokensProvider = nil
-					-- end
-
-					-- 💡 Disable semantic tokens for every language to better integrate the VSCode theme
-					-- local client = vim.lsp.get_client_by_id(event.data.client_id)
-					-- if client and client.server_capabilities.semanticTokensProvider then
-					-- 	client.server_capabilities.semanticTokensProvider = nil
-					-- end
-
-					-- The following two autocommands are used to highlight references of the
-					-- word under your cursor when your cursor rests there for a little while.
-					--    See `:help CursorHold` for information about when this is executed
-					--
-					-- When you move your cursor, the highlights will be cleared (the second autocommand).
-					-- local client = vim.lsp.get_client_by_id(event.data.client_id)
-					-- if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-					-- 	local highlight_augroup =
-					-- 		vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-					-- 	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-					-- 		buffer = event.buf,
-					-- 		group = highlight_augroup,
-					-- 		callback = vim.lsp.buf.document_highlight,
-					-- 	})
-					--
-					-- 	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-					-- 		buffer = event.buf,
-					-- 		group = highlight_augroup,
-					-- 		callback = vim.lsp.buf.clear_references,
-					-- 	})
-					--
-					-- 	vim.api.nvim_create_autocmd("LspDetach", {
-					-- 		group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-					-- 		callback = function(event2)
-					-- 			vim.lsp.buf.clear_references()
-					-- 			vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-					-- 		end,
-					-- 	})
-					-- end
 				end,
 			})
 		end

@@ -17,7 +17,10 @@ return {
 
 		require("origami").setup({
 
-			useLspFoldsWithTreesitterFallback = true, -- required for `autoFold`
+			-- NOTE: this got deprecated
+			-- useLspFoldsWithTreesitterFallback = true,
+			-- NOTE: this should've replaced, but I couldn't make it work
+			-- useLspFoldsWithTreesitterFallback.enabled, -- required for `autoFold`
 
 			pauseFoldsOnSearch = true,
 

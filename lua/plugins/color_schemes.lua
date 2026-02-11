@@ -57,11 +57,11 @@ return {
 				group_overrides = {
 					-- this supports the same val table as vim.api.nvim_set_hl
 					-- use colors from this colorscheme by requiring vscode.colors!
-					Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+					Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = false },
 
 					["@keyword.operator"] = { fg = c.vscPink, bold = false },  -- color for `new` and `delete`
 					["@keyword.directive"] = { fg = c.vscPink, bold = false },
-					["@string.escape"] = { fg = "#D7BA7D", bold = true },
+					["@string.escape"] = { fg = "#D7BA7D", bold = false },
 
 					QuickFixLine = { bg = c.vscSelection, bold = true },
 				}

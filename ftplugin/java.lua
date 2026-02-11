@@ -1,42 +1,72 @@
-local jdtls = require("jdtls")
-local home = os.getenv("HOME")
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-local root_dir = require("jdtls.setup").find_root(root_markers)
+local jdtls = require('jdtls')
 
-if not root_dir then
-	return
-end
+-- 1. Locate the Installation (matching the manual install we did)
+local home = os.getenv('HOME')
+local jdtls_path = home .. "/.local/share/jdtls"
+local launcher_script = jdtls_path .. "/bin/jdtls"
+local configuration = jdtls_path .. "/config_linux"
 
-local workspace_folder = home .. "/.local/share/jdtls/workspaces/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+-- 2. Determine the Data Directory (Workspace)
+-- This creates a unique workspace folder for every project to avoid data corruption
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local workspace_dir = home .. '/.local/share/jdtls-workspace/' .. project_name
 
+-- 3. Define Capabilities (connecting to your existing nvim-cmp setup)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+-- 4. The Configuration Table
 local config = {
 	cmd = {
-		"java",
-		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
-		"-Dosgi.bundles.defaultStartLevel=4",
-		"-Declipse.product=org.eclipse.jdt.ls.core.product",
-		"-Dlog.protocol=true",
-		"-Dlog.level=ALL",
-		"-Xms1g",
-		"--add-modules=ALL-SYSTEM",
-		"--add-opens", "java.base/java.util=ALL-UNNAMED",
-		"--add-opens", "java.base/java.lang=ALL-UNNAMED",
-		"-jar", vim.fn.glob(home .. "/.local/share/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
-		"-configuration", home .. "/.local/share/jdtls/config_linux", -- change to config_mac or config_win as needed
-		"-data", workspace_folder,
+		-- We use the wrapper script (requires Python 3)
+		launcher_script,
+
+		-- Explicitly tell it where the configuration is
+		"-configuration", configuration,
+
+		-- Explicitly tell it where to store project data
+		"-data", workspace_dir,
 	},
 
-	root_dir = root_dir,
-	capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities()),
+	-- Find the root of the project (looking for git, maven, or gradle files)
+	root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle'}),
 
+	-- Your specific settings
+	settings = {
+		java = {
+			errors = { incompleteClasspath = { severity = "ignore" } },
+			configuration = {
+				-- Ensure it knows we are using Java 21
+				runtimes = {
+					{
+						name = "JavaSE-21",
+						path = "/usr/lib/jvm/java-21-openjdk-amd64",
+						default = true,
+					},
+				}
+			}
+		}
+	},
+
+	-- Connect capabilities
+	capabilities = capabilities,
+
+	-- Function to run when the LSP attaches
 	on_attach = function(client, bufnr)
-		-- Use your existing on_attach logic from the main config
-		vim.lsp.inlay_hint.enable(false)
-		vim.keymap.set("n", "<leader>ih", function()
-			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }))
-		end, { buffer = bufnr, desc = "Toggle Inlay Hints" })
-	end,
+		-- NOTE: Your existing Global LspAttach autocommand will run generic keymaps (gd, gr, etc.)
+		-- We only need to add Java-specific keymaps here
+
+		-- Organize Imports
+		vim.keymap.set("n", "<leader>jo", jdtls.organize_imports, { buffer = bufnr, desc = "Java: Organize Imports" })
+
+		-- Extract Variable
+		vim.keymap.set("n", "<leader>jv", jdtls.extract_variable, { buffer = bufnr, desc = "Java: Extract Variable" })
+
+		-- Extract Method
+		vim.keymap.set("v", "<leader>jm", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]], { buffer = bufnr, desc = "Java: Extract Method" })
+	end
 }
 
--- Start or attach to the workspace
+-- 5. Start the Server
 jdtls.start_or_attach(config)
