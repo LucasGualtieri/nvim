@@ -1,17 +1,56 @@
-require("config.lazy")
-require("config")
+-- ╔══════════════════════════════════════════════════════════╗
+-- ║  init.lua — entry point for Neovim 0.12 configuration  ║
+-- ╚══════════════════════════════════════════════════════════╝
 
-vim.g.have_nerd_font = false
+-- Leader keys (must be set before lazy.nvim)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
-if vim.g.vscode then
-	print("Running in VSCode")
-    -- VSCode extension
-else
-    -- ordinary Neovim
-	print("Running in Neovim")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.uv.fs_stat(lazypath) then
+	local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+	local out = vim.fn.system({
+		'git', 'clone', '--filter=blob:none', '--branch=stable',
+		lazyrepo, lazypath,
+	})
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+			{ out, 'WarningMsg' },
+			{ '\nPress any key to exit...' },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
+vim.opt.rtp:prepend(lazypath)
 
--- vim.opt.sessionoptions:append("folds")
+-- Core configuration
+require('options')
+require('keymaps')
+require('autocmds')
 
--- local visual_highlight = require('my_plugins.visual-highlight')
--- visual_highlight.setup()
+-- Plugin manager
+require('lazy').setup({
+	spec = {
+		{ import = 'plugins' },
+		{ import = 'plugins.lang' },
+	},
+	checker = { enabled = true, notify = false },
+	change_detection = { notify = false },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				'gzip',
+				'matchit',
+				'matchparen',
+				'netrwPlugin',
+				'tarPlugin',
+				'tohtml',
+				'tutor',
+				'zipPlugin',
+			},
+		},
+	},
+})

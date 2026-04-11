@@ -1,7 +1,6 @@
 return {
 
 	"chrisgrieser/nvim-origami",
-	cond = not vim.g.vscode,
 
 	event = "VeryLazy",
 	opts = {}, -- needed even when using default config
@@ -14,19 +13,22 @@ return {
 	end,
 
 	config = function()
-
 		require("origami").setup({
 
-			-- NOTE: this got deprecated
-			-- useLspFoldsWithTreesitterFallback = true,
-			-- NOTE: this should've replaced, but I couldn't make it work
-			-- useLspFoldsWithTreesitterFallback.enabled, -- required for `autoFold`
+			useLspFoldsWithTreesitterFallback = {
+				enabled = true,
+				foldmethodIfNeitherIsAvailable = "indent",
+			},
 
 			pauseFoldsOnSearch = true,
 
 			foldtext = {
 				enabled = true,
-				padding = 1,
+				padding = {
+					character = " ",
+					width = 1,
+					hlgroup = nil,
+				},
 				lineCount = {
 					template = "%d lines", -- `%d` is replaced with the number of folded lines
 					hlgroup = "Comment",
@@ -37,12 +39,12 @@ return {
 
 			autoFold = {
 				enabled = false,
-				kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+				kinds = { "comment", "imports" },
 			},
 
 			foldKeymaps = {
-				setup = true, -- modifies `h` and `l`
-				hOnlyOpensOnFirstColumn = true,
+				setup = true, -- modifies `h`, `l`, `^`, and `$`
+				closeOnlyOnFirstColumn = true,
 			},
 		})
 	end
