@@ -9,6 +9,14 @@
 local autocmd = vim.api.nvim_create_autocmd -- Shorthand for creating autocommands
 local augroup = vim.api.nvim_create_augroup -- Shorthand for creating autocommand groups
 
+-- Google Apps Script: .gs is plain JS; map it so Treesitter, tsserver (typescript-tools),
+-- Prettier (conform), and eslint_d (nvim-lint) all attach like normal JavaScript.
+vim.filetype.add({
+	extension = {
+		gs = 'javascript',
+	},
+})
+
 -- ── Highlight on yank ───────────────────────────────────────
 -- Briefly flashes the yanked (copied) text so you can see exactly
 -- what was captured. Uses the IncSearch highlight group for the flash.
