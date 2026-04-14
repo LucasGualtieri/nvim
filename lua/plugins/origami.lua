@@ -43,9 +43,29 @@ return {
 			},
 
 			foldKeymaps = {
-				setup = true, -- modifies `h`, `l`, `^`, and `$`
+				setup = false,
 				closeOnlyOnFirstColumn = true,
 			},
 		})
+
+		local function normal_fold(cmd)
+			pcall(function()
+				vim.cmd.normal({ cmd, bang = true })
+			end)
+		end
+
+		vim.keymap.set("n", ",", function()
+			for _ = 1, vim.v.count1 do
+				normal_fold("zc")
+			end
+		end, { desc = "Origami: fold close (zc)" })
+
+		vim.keymap.set("n", ".", function()
+			for _ = 1, vim.v.count1 do
+				if vim.fn.foldclosed(".") > -1 then
+					normal_fold("zo")
+				end
+			end
+		end, { desc = "Origami: fold open (zo)" })
 	end
 }
