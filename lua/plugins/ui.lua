@@ -87,12 +87,16 @@ return {
 					hl("javaOperator", pink)
 					hl("@keyword.java", pink) -- fallback for 'new' and other generic keywords
 
-					-- The '@' symbol in annotations should be standard Foreground
-					hl("javaAnnotation", fg_color)
-					hl("@punctuation.special.java", fg_color)
+					-- The '@' symbol in annotations should be standard Foreground.
+					-- Treesitter captures both '@' and the annotation name as @attribute; we set
+					-- @attribute.java to fg_color so '@' stays white. The annotation name still
+					-- appears teal because @lsp.type.annotation.java (LSP semantic tokens, higher
+					-- priority) overrides only the name node — jdtls never applies 'annotation'
+					-- to the '@' punctuation marker.
+					hl("javaAnnotation", fg_color)          -- regex syntax fallback
+					hl("@attribute.java", fg_color)         -- treesitter: '@' marker stays white
 
-					-- But the Annotation Name itself (like RestController) is a Type (Teal)
-					hl("@attribute.java", teal)
+					-- Annotation Name itself (e.g. RestController) → teal via LSP
 					hl("@lsp.type.annotation.java", teal)
 
 					-- jdtls uses annotationMember for names in @Foo(name = value) (e.g. required = false).

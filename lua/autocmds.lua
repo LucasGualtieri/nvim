@@ -30,15 +30,15 @@ autocmd('TextYankPost', {                                 -- Fires after any yan
 -- ── Restore cursor position on file open ────────────────────
 -- When you reopen a file, the cursor jumps back to where you left off
 -- instead of starting at line 1. Uses the '" mark that Neovim stores automatically.
-autocmd('BufReadPost', {                                        -- Fires after reading a file into a buffer
-  group = augroup('RestoreCursor', { clear = true }),           -- Prevents duplicate autocmds
-  callback = function(args)
-    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')      -- Get the '" mark (last cursor position in this file)
-    local line_count = vim.api.nvim_buf_line_count(args.buf)    -- Total number of lines in the buffer
-    if mark[1] > 0 and mark[1] <= line_count then               -- Only restore if the mark is within valid range
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)              -- pcall protects against edge cases (e.g., deleted lines)
-    end
-  end,
+autocmd('BufReadPost', {										 -- Fires after reading a file into a buffer
+	group = augroup('RestoreCursor', { clear = true }),			 -- Prevents duplicate autocmds
+	callback = function(args)
+		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')	 -- Get the '" mark (last cursor position in this file)
+		local line_count = vim.api.nvim_buf_line_count(args.buf) -- Total number of lines in the buffer
+		if mark[1] > 0 and mark[1] <= line_count then			 -- Only restore if the mark is within valid range
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)			 -- pcall protects against edge cases (e.g., deleted lines)
+		end
+	end,
 })
 
 -- ── Disable auto-comment on new line ────────────────────────

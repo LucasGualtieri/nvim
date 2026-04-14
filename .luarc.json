@@ -1,5 +1,6 @@
 {
     "diagnostics.globals": [
-        "line"
+        "line",
+        "vim"
     ]
 }

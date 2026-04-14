@@ -22,6 +22,30 @@ return {
 		},
 		config = function(_, opts)
 			require('nvim-treesitter').setup(opts)
+
+			-- nvim-treesitter no longer turns on highlight; queries live in the plugin but
+			-- Neovim only draws TS highlights after |vim.treesitter.start()| (see plugin README).
+			-- Without it, |vim.treesitter.highlighter.active[buf]| is nil, |:Inspect| shows no
+			-- Treesitter captures, and regex |syntax| may still be cleared if something else
+			-- attached a highlighter briefly.
+			local group = vim.api.nvim_create_augroup('nvim-config.treesitter-start', { clear = true })
+			local function try_start(bufnr)
+				bufnr = vim._resolve_bufnr(bufnr)
+				if vim.treesitter.highlighter.active[bufnr] then
+					return
+				end
+				pcall(vim.treesitter.start, bufnr)
+			end
+
+			vim.api.nvim_create_autocmd({ 'FileType', 'BufReadPost', 'BufNewFile' }, {
+				group = group,
+				callback = function(args)
+					try_start(args.buf)
+				end,
+			})
+
+			-- Lazy may load this plugin after FileType/BufReadPost already ran for the current buffer.
+			try_start(0)
 		end,
 	},
 

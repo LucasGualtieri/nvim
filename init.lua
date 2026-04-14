@@ -54,3 +54,18 @@ require('lazy').setup({
 		},
 	},
 })
+
+if vim.g.neovide then  -- only apply these settings when inside Neovide
+
+	-- vim.opt.guifont = "JetBrains Mono:h14"  -- font and size
+	vim.g.neovide_cursor_animation_length = 0.025
+	vim.g.neovide_scroll_animation_length = 0
+	vim.g.neovide_cursor_trail_size = 0
+
+	vim.keymap.set("n", "<C-=>", function()
+		vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.01
+	end)
+	vim.keymap.set("n", "<C-->", function()
+		vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.01
+	end)
+end

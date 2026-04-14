@@ -62,9 +62,9 @@ return {
 		cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewClose' },
 		keys = {
 			{ '<leader>gd', '<cmd>DiffviewOpen<CR>',              desc = 'Git: Diffview (working tree vs HEAD)' },
+			{ '<leader>gc', '<cmd>DiffviewClose<CR>',             desc = 'Git: Close Diffview' },
 			{ '<leader>gh', '<cmd>DiffviewFileHistory %<CR>',     desc = 'Git: File history (current)' },
 			{ '<leader>gH', '<cmd>DiffviewFileHistory<CR>',       desc = 'Git: Repo history' },
-			{ '<leader>gc', '<cmd>DiffviewClose<CR>',             desc = 'Git: Close Diffview' },
 		},
 		opts = {},
 	},

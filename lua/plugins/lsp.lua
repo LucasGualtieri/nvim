@@ -6,7 +6,7 @@
 return {
 	-- ── Mason ─────────────────────────────────────────────────
 	{
-		'williamboman/mason.nvim',
+		'mason-org/mason.nvim',
 		cmd = 'Mason',
 		build = ':MasonUpdate',
 		opts = {
@@ -16,17 +16,17 @@ return {
 
 	-- ── Mason-lspconfig (bridge) ──────────────────────────────
 	{
-		'williamboman/mason-lspconfig.nvim',
+		'mason-org/mason-lspconfig.nvim',
 		event = { 'BufReadPre', 'BufNewFile' },
 		dependencies = {
-			'williamboman/mason.nvim',
+			'mason-org/mason.nvim',
 			'neovim/nvim-lspconfig',
 		},
 		opts = {
 			ensure_installed = {
 				'clangd',
 				'pyright',
-				'ts_ls',
+				'vtsls',
 				'lua_ls',
 				'jdtls',
 			},
@@ -38,7 +38,7 @@ return {
 	{
 		'WhoIsSethDaniel/mason-tool-installer.nvim',
 		event = 'VeryLazy',
-		dependencies = { 'williamboman/mason.nvim' },
+		dependencies = { 'mason-org/mason.nvim' },
 		opts = {
 			ensure_installed = {
 				-- Formatters
@@ -81,12 +81,12 @@ return {
 				},
 			})
 
-			-- Enable non-Java, non-TypeScript servers
+			-- Enable non-Java servers here.
 			-- (clangd is enabled in lang/cpp.lua)
-			-- (typescript-tools handles ts_ls, so ts_ls is NOT enabled here)
+			-- (vtsls is configured in lang/typescript.lua via init, enabled below)
 			-- Keep every server's enable here: duplicate nvim-lspconfig specs in lazy.nvim
 			-- override `config` instead of chaining it, so a second spec would drop these keymaps.
-			vim.lsp.enable({ 'lua_ls', 'pyright' })
+			vim.lsp.enable({ 'lua_ls', 'pyright', 'vtsls' })
 
 			-- ── LspAttach keymaps ─────────────────────────────────
 			vim.api.nvim_create_autocmd('LspAttach', {
