@@ -8,7 +8,6 @@ return {
 		'nvim-treesitter/nvim-treesitter',
 		build = ':TSUpdate',
 		event = { 'BufReadPost', 'BufNewFile' },
-		---@type TSConfig
 		opts = {
 			ensure_installed = {
 				'lua', 'python', 'typescript', 'javascript', 'tsx',
