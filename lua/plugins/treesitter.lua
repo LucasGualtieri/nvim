@@ -13,6 +13,7 @@ return {
 				'lua', 'python', 'typescript', 'javascript', 'tsx',
 				'java', 'c', 'cpp', 'bash', 'json', 'yaml', 'toml',
 				'markdown', 'markdown_inline', 'html', 'css',
+				'latex', 'bibtex',
 			},
 			highlight = { enable = true },
 			indent = { enable = true },

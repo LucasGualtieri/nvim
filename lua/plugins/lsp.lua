@@ -29,6 +29,7 @@ return {
 				'vtsls',
 				'lua_ls',
 				'jdtls',
+				'texlab',
 			},
 			automatic_installation = false,
 		},
@@ -86,7 +87,8 @@ return {
 			-- (vtsls is configured in lang/typescript.lua via init, enabled below)
 			-- Keep every server's enable here: duplicate nvim-lspconfig specs in lazy.nvim
 			-- override `config` instead of chaining it, so a second spec would drop these keymaps.
-			vim.lsp.enable({ 'lua_ls', 'pyright', 'vtsls' })
+			-- texlab: configured in plugins/lang/latex.lua (vim.lsp.config)
+			vim.lsp.enable({ 'lua_ls', 'pyright', 'vtsls', 'texlab' })
 
 			-- ── LspAttach keymaps ─────────────────────────────────
 			vim.api.nvim_create_autocmd('LspAttach', {

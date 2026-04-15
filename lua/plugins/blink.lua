@@ -9,6 +9,7 @@ return {
 		event = 'InsertEnter',
 		dependencies = {
 			'rafamadriz/friendly-snippets',
+			'erooke/blink-cmp-latex',
 		},
 		opts = {
 			-- preset: Tab / S-Tab = snippet jump; add C-l / C-h like nvim-cmp + LuaSnip (only in insert via blink).
@@ -32,7 +33,13 @@ return {
 			},
 
 			sources = {
-				default = { 'lsp', 'path', 'snippets', 'buffer' },
+				default = { 'lsp', 'path', 'snippets', 'buffer', 'latex' },
+				providers = {
+					latex = {
+						name = 'LaTeX',
+						module = 'blink-cmp-latex',
+					},
+				},
 			},
 
 			fuzzy = {

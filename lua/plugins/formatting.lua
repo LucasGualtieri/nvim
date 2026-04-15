@@ -26,6 +26,7 @@ return {
 				java            = {}, -- jdtls handles formatting
 				c               = {}, -- clangd handles formatting via LSP
 				cpp             = {}, -- clangd handles formatting via LSP
+				tex             = {}, -- VimTeX / latexmk; do not run conform here
 			},
 		},
 	},
