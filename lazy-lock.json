@@ -44,6 +44,7 @@
   "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "57a0eb84b2008c76e77930639890d9874195b1e1" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
   "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
+  "unclash.nvim": { "branch": "main", "commit": "04f6aba5e2eea8b665cba88f21082e33a7cb6e59" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vscode.nvim": { "branch": "main", "commit": "aa1102a7e15195c9cca22730b09224a7f7745ba8" }
 }

@@ -19,6 +19,9 @@ o.laststatus = 3        -- Single global statusline shared by all windows (inste
 o.showmode = false      -- Hide "-- INSERT --" from the command line — lualine already shows the mode
 -- o.updatetime = 50
 
+vim.opt.mouse = "a"          -- enable mouse everywhere
+vim.opt.mousemodel = "popup" -- right-click popup menu in GUI / terminals that support it
+
 -- ── Indentation ─────────────────────────────────────────────
 o.tabstop = 4        -- A <Tab> character counts as 2 columns visually
 o.shiftwidth = 4     -- Indentation commands (>>, <<, ==) shift by 2 columns

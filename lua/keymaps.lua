@@ -89,3 +89,34 @@ map('n', '<C-s>', function()
 		end
 	end
 end, { desc = 'Save file and notify' })
+
+map('n', '<leader>rq', function()
+	local actions = require('telescope.actions')
+	local action_state = require('telescope.actions.state')
+	require('telescope.builtin').live_grep({
+		prompt_title = 'Live grep — ⌃Q → quickfix → replace',
+		attach_mappings = function(prompt_bufnr, map)
+			local function send_qf_then_replace()
+				local search = action_state.get_current_line()
+				if search == '' then
+					vim.notify('live_grep: type a pattern first, then ⌃Q', vim.log.levels.WARN)
+					return
+				end
+				actions.send_to_qflist(prompt_bufnr)
+				actions.open_qflist(prompt_bufnr)
+				vim.schedule(function()
+					local replace = vim.fn.input('Replace "' .. search .. '" with: ')
+					if replace == '' then return end
+					vim.cmd(string.format(
+						'cfdo %%s#%s#%s#gc | update',
+						vim.fn.escape(search, '#'),
+						vim.fn.escape(replace, '#')
+					))
+				end)
+			end
+			map('i', '<C-q>', send_qf_then_replace)
+			map('n', '<C-q>', send_qf_then_replace)
+			return true
+		end,
+	})
+end, { desc = 'Telescope live_grep → ⌃Q → cfdo replace' })
