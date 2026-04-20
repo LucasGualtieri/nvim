@@ -6,18 +6,20 @@ return {
 	{
 		'saghen/blink.cmp',
 		version = '1.*',
-		event = 'InsertEnter',
+		-- Load on BufReadPre so capabilities are set in vim.lsp.config('*', ...)
+		-- before any vim.lsp.enable() call in lsp.lua runs.
+		event = { 'BufReadPre', 'BufNewFile', 'InsertEnter' },
 		dependencies = {
 			'rafamadriz/friendly-snippets',
 			'erooke/blink-cmp-latex',
 		},
 		opts = {
 			-- preset: Tab / S-Tab = snippet jump; add C-l / C-h like nvim-cmp + LuaSnip (only in insert via blink).
-			keymap = {
-				preset = 'default',
-				['<C-l>'] = { 'snippet_forward', 'fallback' },
-				['<C-h>'] = { 'snippet_backward', 'fallback' },
-			},
+			-- keymap = {
+			-- 	preset = 'default',
+			-- 	['<C-l>'] = { 'snippet_forward', 'fallback' },
+			-- 	['<C-h>'] = { 'snippet_backward', 'fallback' },
+			-- },
 
 			completion = {
 				ghost_text = { enabled = false },

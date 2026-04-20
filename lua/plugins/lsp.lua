@@ -32,6 +32,10 @@ return {
 				'texlab',
 			},
 			automatic_installation = false,
+			-- jdtls is managed entirely by nvim-jdtls (plugins/lang/java.lua).
+			-- Excluding it here prevents mason-lspconfig from calling vim.lsp.enable('jdtls')
+			-- and launching a second, bare JVM instance alongside the configured one.
+			automatic_enable = { exclude = { 'jdtls' } },
 		},
 	},
 
@@ -63,7 +67,13 @@ return {
 	{
 		'neovim/nvim-lspconfig',
 		event = { 'BufReadPre', 'BufNewFile' },
-		dependencies = { 'nvim-telescope/telescope.nvim' },
+		dependencies = {
+			'nvim-telescope/telescope.nvim',
+			-- blink.cmp must run its config (which sets blink capabilities via
+			-- vim.lsp.config('*', ...)) before vim.lsp.enable() is called here.
+			-- Declaring it as a dependency guarantees that ordering.
+			'saghen/blink.cmp',
+		},
 		config = function()
 			-- Global LSP config — capabilities injected by blink.cmp via completion.lua
 			vim.lsp.config('*', {

@@ -9,7 +9,21 @@ return {
 
 		local harpoon = require("harpoon")
 
-		harpoon:setup()
+		harpoon:setup({
+			settings = {
+				save_on_toggle = true,
+				sync_on_ui_close = true,
+			},
+			default = {
+				display = function(list_item)
+					local path = list_item.value
+					local filename = path:match("([^/]+)$") or path
+					local dir = path:match("^(.+)/[^/]+$") or ""
+					dir = dir:gsub("^src/main/java/br/com/direto/api/paraempresas/", "")
+					return filename .. " - " .. dir
+				end,
+			}
+		})
 
 		vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 		vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
@@ -26,7 +40,7 @@ return {
 		vim.keymap.set("n", "<leader>9", function() harpoon:list():select(9) end)
 
 		-- Toggle previous & next buffers stored within Harpoon list
-		vim.keymap.set("n", "<A-h>", function() harpoon:list():prev() end)
-		vim.keymap.set("n", "<A-l>", function() harpoon:list():next() end)
+		-- vim.keymap.set("n", "<A-h>", function() harpoon:list():prev() end)
+		-- vim.keymap.set("n", "<A-l>", function() harpoon:list():next() end)
 	end
 }

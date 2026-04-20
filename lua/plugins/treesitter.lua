@@ -30,7 +30,7 @@ return {
 			-- attached a highlighter briefly.
 			local group = vim.api.nvim_create_augroup('nvim-config.treesitter-start', { clear = true })
 			local function try_start(bufnr)
-				bufnr = vim._resolve_bufnr(bufnr)
+				bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
 				if vim.treesitter.highlighter.active[bufnr] then
 					return
 				end

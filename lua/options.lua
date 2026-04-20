@@ -25,7 +25,7 @@ vim.opt.mousemodel = "popup" -- right-click popup menu in GUI / terminals that s
 -- ── Indentation ─────────────────────────────────────────────
 o.tabstop = 4        -- A <Tab> character counts as 2 columns visually
 o.shiftwidth = 4     -- Indentation commands (>>, <<, ==) shift by 2 columns
-o.expandtab = false  -- Pressing <Tab> inserts spaces instead of a literal tab character
+o.expandtab = true   -- Pressing <Tab> inserts spaces instead of a literal tab character
 o.smartindent = true -- Auto-indent new lines based on syntax (e.g., after '{' or ':')
 -- o.softtabstop = 4    -- TODO: Explain what this is.
 

@@ -58,9 +58,13 @@ return {
 			vim.api.nvim_set_hl(0, '@lsp.type.operator.cpp', { link = '' })  -- Remove o highlight do operador semântico para sobrescrevermos a cor
 			-- vim.api.nvim_set_hl(0, "Visual", { bg = "#264F78", fg = "NONE" })
 
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "java",
-				callback = function()
+		-- once = true: all groups are global (namespace 0) so they only need to be
+		-- applied once — the first Java buffer is enough. Without this, 35+ hl
+		-- calls fire every time any Java file is opened.
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "java",
+			once = true,
+			callback = function()
 					-- Colors matching VSCode Dark+
 					local pink = "#C586C0"
 					local blue = "#569CD6"
