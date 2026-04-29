@@ -16,7 +16,7 @@ map('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })  -- Ctrl+L → fo
 
 -- Tmux sessionizer: needs a tmux client (`tmux popup`). Script was non-executable
 -- before (exec failed silently with `silent !`); we run via `bash` and surface errors.
-map('n', '<leader>f', function()
+map('n', '<leader>tf', function()
 	if vim.env.TMUX == nil then
 		vim.notify('tmux-sessionizer: start Neovim from inside tmux (TMUX is unset).', vim.log.levels.WARN)
 		return
@@ -55,6 +55,13 @@ map('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end,
 -- `mz` saves cursor position, J joins, backtick-z restores it so the cursor
 -- stays on the original word instead of jumping to the end of the joined line.
 map('n', 'J', 'mzJ`z', { desc = 'Join line (cursor stays)' })
+
+-- ── Duplicate selection up/down (visual) ────────────────────
+-- ⇧+⌥+k/j duplicates the current visual selection above/below itself.
+-- `:t {addr}` (transfer/copy) writes the range after {addr}; `gv`
+-- re-selects the original lines so the mapping can be repeated.
+map('v', '<S-A-k>', ":'<,'>t'><CR>gv", { desc = 'Copy selection up' })
+map('v', '<S-A-j>', ":'<,'>t-1<CR>gv", { desc = 'Copy selection down' })
 
 -- ── Toggle relative line numbers ─────────────────────────────
 map('n', '<leader><leader>', function()
@@ -102,9 +109,10 @@ map('n', '<leader>rq', function()
 					vim.notify('live_grep: type a pattern first, then ⌃Q', vim.log.levels.WARN)
 					return
 				end
-				actions.send_to_qflist(prompt_bufnr)
-				actions.open_qflist(prompt_bufnr)
+				actions.send_selected_to_qflist(prompt_bufnr)
+                -- actions.open_qflist(prompt_bufnr)
 				vim.schedule(function()
+					vim.cmd('Trouble qflist open')
 					local replace = vim.fn.input('Replace "' .. search .. '" with: ')
 					if replace == '' then return end
 					vim.cmd(string.format(

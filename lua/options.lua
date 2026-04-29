@@ -17,6 +17,7 @@ o.splitbelow = true     -- New horizontal splits open below the current window
 o.winborder = 'rounded' -- Neovim 0.12: sets rounded borders globally for ALL floating windows (hover, completion, etc.)
 o.laststatus = 3        -- Single global statusline shared by all windows (instead of one per window)
 o.showmode = false      -- Hide "-- INSERT --" from the command line — lualine already shows the mode
+-- o.colorcolumn = "80"
 -- o.updatetime = 50
 
 vim.opt.mouse = "a"          -- enable mouse everywhere
@@ -36,6 +37,7 @@ o.hlsearch = true   -- Highlight all matches of the last search pattern
 o.incsearch = true  -- Show matches incrementally as you type the search pattern
 
 -- ── Files ───────────────────────────────────────────────────
+o.exrc = true      -- Source project-local .nvim.lua when cwd is the project (run :trust once per repo)
 o.undofile = true  -- Persist undo history to disk so you can undo even after closing and reopening a file
 o.swapfile = false -- Don't create .swp recovery files (we rely on undofile + git instead)
 o.backup = false   -- Don't create ~ backup files before overwriting

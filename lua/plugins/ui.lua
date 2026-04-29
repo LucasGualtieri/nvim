@@ -46,6 +46,7 @@ return {
 
 					["@keyword.operator"] = { fg = c.vscPink, bold = false },  -- color for `new` and `delete`
 					["@keyword.directive"] = { fg = c.vscPink, bold = false },
+					["@lsp.type.property.lua"] = { fg = c.vscBlueGreen, bold = false },
 					["@string.escape"] = { fg = "#D7BA7D", bold = false },
 
 					QuickFixLine = { bg = c.vscSelection, bold = true },
