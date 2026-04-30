@@ -1,0 +1,213 @@
+# ╔══════════════════════════════════════════════════════════════════════════╗
+# ║  requirements.txt — Manifesto completo de dependências da configuração   ║
+# ║                                                                          ║
+# ║  Esta é uma configuração Neovim (Lua), não um projeto Python. O nome     ║
+# ║  "requirements.txt" é usado aqui apenas como um manifesto humano que     ║
+# ║  consolida TODAS as dependências necessárias para rodar a configuração   ║
+# ║  exatamente como descrita em ~/.config/nvim.                             ║
+# ║                                                                          ║
+# ║  Não é consumível por `pip install -r` nem por nenhum gerenciador        ║
+# ║  isolado — cada seção indica o gerenciador correspondente.               ║
+# ╚══════════════════════════════════════════════════════════════════════════╝
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 1. RUNTIME / SISTEMA OPERACIONAL
+# ═══════════════════════════════════════════════════════════════════════════
+# Pré-requisitos do host. Instale via Homebrew (macOS) ou equivalente.
+
+neovim                         >= 0.12.0   # Nightly. README declara explicitamente Neovim 0.12; usa vim.lsp.config/enable, vim.diagnostic.jump, vim.uv, winborder, etc.
+git                            >= 2.30      # Necessário para lazy.nvim clonar plugins e para gitsigns/neogit/diffview
+curl                           *            # Usado por lazy.nvim e Mason em alguns instaladores
+unzip                          *            # Mason extrai bundles de servidores LSP
+make                           *            # Build de telescope-fzf-native (build = 'make')
+gcc | clang                    *            # Compilador C para nvim-treesitter (TSUpdate) e telescope-fzf-native
+ripgrep (rg)                   >= 13        # Telescope live_grep e <leader>rq (cfdo replace)
+fd                             >= 8         # Recomendado para Telescope find_files (mais rápido que find)
+bash                           *            # Invocado em keymaps.lua para rodar o script tmux-sessionizer
+tmux                           >= 3.2       # Necessário para `tmux popup -E` em <leader>tf (tmux-sessionizer) e para nvim-tmux-navigation
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 2. TOOLCHAINS DE LINGUAGEM (necessárias pelos LSPs / DAPs / formatadores)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ── Node.js (vtsls, pyright, prettier, eslint_d são distribuídos via npm) ──
+node                           >= 18
+npm                            *
+
+# ── Python (pyright analisa, debugpy depura, ruff/black formatam) ──────────
+python3                        >= 3.10
+
+# ── Java (JDTLS roda em JVM; lombok.jar é injetado como javaagent) ─────────
+jdk                            >= 17        # JDTLS exige JDK 17+; projetos Spring Boot modernos também
+# Maven / Gradle são opcionais — só precisam existir se seus projetos usam
+# (`gradlew`/`mvnw` são detectados como root markers em lang/java.lua).
+
+# ── Lombok (injetado manualmente em jdtls como -javaagent) ─────────────────
+# Coloque o JAR em: ~/.local/share/nvim/mason/packages/jdtls/lombok.jar
+lombok.jar                     >= 1.18      # Baixe de https://projectlombok.org/download
+
+# ── C / C++ (clangd) ──────────────────────────────────────────────────────
+# clangd vem com Xcode Command Line Tools no macOS, ou via `brew install llvm`.
+# A configuração em lang/cpp.lua usa: --background-index, --clang-tidy,
+# --header-insertion=iwyu, --completion-style=detailed.
+clangd                         >= 17
+
+# ── LaTeX (VimTeX + TexLab + Skim) ────────────────────────────────────────
+# README de lang/latex.lua: requer MacTeX (ou BasicTeX) com latexmk no PATH.
+mactex | basictex              *            # Provê latexmk, pdflatex, etc.
+latexmk                        *            # Compilador contínuo (default do VimTeX)
+Skim.app                       *            # PDF viewer com SyncTeX inverso — https://skim-app.sourceforge.net/
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 3. GERENCIADOR DE PLUGINS (auto-bootstrap)
+# ═══════════════════════════════════════════════════════════════════════════
+# Clonado automaticamente em ~/.local/share/nvim/lazy/lazy.nvim na 1ª execução
+# (ver init.lua linhas 10-26). Branch fixa: stable.
+
+folke/lazy.nvim                @ stable
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 4. PLUGINS NEOVIM (gerenciados por lazy.nvim — versões fixas em lazy-lock.json)
+# ═══════════════════════════════════════════════════════════════════════════
+# Sincronize com: :Lazy sync
+# As versões abaixo refletem o estado ATUAL de lazy-lock.json. Para reproduzir
+# byte-a-byte, basta versionar o lazy-lock.json em git.
+
+# ── Core / dependências comuns ─────────────────────────────────────────────
+nvim-lua/plenary.nvim                       # Lib Lua usada por Telescope, Neogit, todo-comments, harpoon
+MunifTanjim/nui.nvim                        # Lib UI usada por neo-tree
+nvim-tree/nvim-web-devicons                 # Ícones para Oil, neo-tree, lualine, barbecue
+nvim-neotest/nvim-nio                       # Lib async usada por nvim-dap-ui
+
+# ── LSP stack ──────────────────────────────────────────────────────────────
+mason-org/mason.nvim                        # Instalador de LSPs/DAPs/formatadores/linters
+mason-org/mason-lspconfig.nvim              # Bridge mason ↔ lspconfig
+WhoIsSethDaniel/mason-tool-installer.nvim   # Instala formatadores/linters/DAPs declarativamente
+neovim/nvim-lspconfig                       # Database de configs LSP (vim.lsp.config)
+
+# ── Completion ─────────────────────────────────────────────────────────────
+saghen/blink.cmp                @ 1.*       # Engine de autocomplete (versão "1.*")
+rafamadriz/friendly-snippets                # Snippets prontos
+erooke/blink-cmp-latex                      # Source de símbolos LaTeX
+
+# ── Treesitter ─────────────────────────────────────────────────────────────
+nvim-treesitter/nvim-treesitter             # Branch main (parser AST)
+nvim-treesitter/nvim-treesitter-textobjects # @function/@class/@parameter selects e moves
+
+# ── Telescope ──────────────────────────────────────────────────────────────
+nvim-telescope/telescope.nvim
+nvim-telescope/telescope-fzf-native.nvim    # build = 'make' (precisa de make + compilador C)
+
+# ── DAP ────────────────────────────────────────────────────────────────────
+mfussenegger/nvim-dap                       # Debug Adapter Protocol core
+rcarriga/nvim-dap-ui                        # UI estilo VSCode
+theHamsta/nvim-dap-virtual-text             # Inline values
+mfussenegger/nvim-dap-python                # Adapter Python (usa debugpy do Mason)
+
+# ── Linguagens específicas ─────────────────────────────────────────────────
+mfussenegger/nvim-jdtls                     # Java (gerencia jdtls direto, sem mason-lspconfig)
+JavaHello/spring-boot.nvim                  # Spring Boot LS (injeta bundles em jdtls)
+p00f/clangd_extensions.nvim                 # Inlay hints + ClangdSwitchSourceHeader
+lervag/vimtex                               # Compile, PDF, SyncTeX (Skim) para LaTeX
+
+# ── Formatação / lint ──────────────────────────────────────────────────────
+stevearc/conform.nvim                       # Formatadores por filetype
+mfussenegger/nvim-lint                      # Linters (eslint_d em JS/TS)
+
+# ── UI / tema ──────────────────────────────────────────────────────────────
+Mofiqul/vscode.nvim                         # Tema VSCode Dark+ (com overrides Java em ui.lua)
+nvim-lualine/lualine.nvim                   # Statusline
+utilyre/barbecue.nvim                       # Winbar com breadcrumbs (via nvim-navic)
+SmiteshP/nvim-navic                         # Provider de breadcrumbs LSP
+lukas-reineke/indent-blankline.nvim         # Guias de indentação (main = 'ibl')
+LucasGualtieri/mini.indentscope             # Indicador de escopo (fork pessoal)
+echasnovski/mini.trailspace                 # Trim de espaços trailing (chamado em <C-s>)
+echasnovski/mini.move                       # Move linhas/seleção com S-h/j/k/l
+stevearc/dressing.nvim                      # Substitui vim.ui.input/select por float bonito
+rachartier/tiny-inline-diagnostic.nvim      # Diagnostics inline multi-linha
+
+# ── Explorers ──────────────────────────────────────────────────────────────
+stevearc/oil.nvim                           # Diretório-como-buffer (substitui netrw)
+nvim-neo-tree/neo-tree.nvim     @ v3.x      # Sidebar tree (filesystem/buffers/git)
+
+# ── Git ────────────────────────────────────────────────────────────────────
+lewis6991/gitsigns.nvim                     # Sinais de hunk + blame inline
+NeogitOrg/neogit                            # Magit-like
+sindrets/diffview.nvim                      # Diff/merge tool 3-way
+madmaxieee/unclash.nvim                     # Botões inline VSCode-style em conflitos
+
+# ── Edição ─────────────────────────────────────────────────────────────────
+windwp/nvim-autopairs                       # Auto-fechamento de pares
+tpope/vim-surround                          # cs/ds/ys + b/B aliases
+mg979/vim-visual-multi                      # Multi-cursores (find under, regex)
+hiphish/rainbow-delimiters.nvim             # Parênteses coloridos
+chrisgrieser/nvim-origami                   # Folds + foldtext rico
+
+# ── Navegação / produtividade ──────────────────────────────────────────────
+ThePrimeagen/harpoon            @ harpoon2  # Bookmarks de arquivos
+folke/todo-comments.nvim                    # Highlight de TODO/FIXME/HACK
+folke/trouble.nvim                          # Painel de diagnostics/symbols
+alexghergh/nvim-tmux-navigation             # <C-h/j/k/l> entre splits e panes tmux
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 5. FERRAMENTAS GERENCIADAS PELO MASON
+# ═══════════════════════════════════════════════════════════════════════════
+# Instalação automática via mason-tool-installer + mason-lspconfig.
+# Comando manual: :Mason / :MasonToolsInstall
+# Configuradas em: lua/plugins/lsp.lua
+
+# ── LSP servers (mason-lspconfig.ensure_installed) ─────────────────────────
+clangd                                      # C / C++ / Objective-C
+pyright                                     # Python (configurado com workspace diagnostic)
+vtsls                                       # TypeScript / JavaScript / JSX / TSX (com inlay hints)
+lua_ls                                      # Lua
+jdtls                                       # Java (gerenciado por nvim-jdtls; automatic_enable=false)
+texlab                                      # LaTeX (chktex + forwardSearch via Skim)
+
+# ── Formatadores (mason-tool-installer.ensure_installed) ───────────────────
+prettier                                    # JS/TS/JSON/CSS/HTML
+black                                       # Python (atualmente conform usa ruff_format; black mantido)
+ruff                                        # Python format + organize imports
+stylua                                      # Lua
+
+# ── Linters ────────────────────────────────────────────────────────────────
+eslint_d                                    # JS/TS (rodado por nvim-lint em BufWritePost/BufReadPost/InsertLeave)
+
+# ── Debug adapters ─────────────────────────────────────────────────────────
+debugpy                                     # Python — injetado em nvim-dap-python via mason path
+java-debug-adapter                          # Java — bundle JAR injetado em jdtls.init_options.bundles
+java-test                                   # Java — idem (exclui runner-jar-with-dependencies.jar e jacocoagent.jar)
+
+# ── Spring Boot ────────────────────────────────────────────────────────────
+vscode-spring-boot-tools                    # Spring Boot LS — exposto via spring_boot.java_extensions()
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 6. ASSETS / CONFIGURAÇÕES OPCIONAIS DO HOST
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ── Skim inverse search (configure manualmente em Skim → Sync → Custom) ────
+#   Command:   nvim
+#   Arguments: --headless -c "VimtexInverseSearch %line '%file'"
+
+# ── Fonte com Nerd Font (necessária para nvim-web-devicons) ────────────────
+# Recomendada: JetBrainsMono Nerd Font, FiraCode Nerd Font, etc.
+# Sem Nerd Font, ícones no oil/neo-tree/lualine/barbecue aparecem como ▯.
+
+# ── Neovide (opcional) ─────────────────────────────────────────────────────
+# init.lua tem bloco específico se vim.g.neovide está setado (cursor anim,
+# scale factor com <C-=>/<C-->). Não obrigatório.
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 7. PLUGINS DESATIVADOS (não carregados, presentes apenas como referência)
+# ═══════════════════════════════════════════════════════════════════════════
+# lua/plugins/desativados/ contém specs comentados que NÃO são instalados:
+#   - MagicDuck/grug-far.nvim       (search & replace)
+#   - RRethy/vim-illuminate         (highlight de referências)
+#   - Isrothy/neominimap.nvim       (minimap estilo VSCode)
