@@ -63,6 +63,10 @@ map('n', 'J', 'mzJ`z', { desc = 'Join line (cursor stays)' })
 map('v', '<S-A-k>', ":'<,'>t'><CR>gv", { desc = 'Copy selection up' })
 map('v', '<S-A-j>', ":'<,'>t-1<CR>gv", { desc = 'Copy selection down' })
 
+-- ── Paste over selection without yanking replaced text ──────
+-- With `clipboard=unnamedplus`, default visual `p` puts the replaced text on the system clipboard.
+map('x', 'p', '"_dP', { desc = 'Paste without overwriting clipboard' })
+
 -- ── Toggle relative line numbers ─────────────────────────────
 map('n', '<leader><leader>', function()
 	local rn = vim.wo.relativenumber
@@ -79,6 +83,7 @@ map('n', '<C-i>', '<C-o>zz', { desc = 'Jump forward (centered)' })
 -- ── Ctrl+C / backspace / return / Q ─────────────────────────
 -- <C-c> as <Esc> (in n/i/x: normal-mode <Esc> still runs nohlsearch above).
 map({ 'i', 'n', 'x' }, '<C-c>', '<Esc>', { desc = 'Escape' })
+
 -- Normal-mode: append, delete newline or insert newline, return to normal.
 map('n', '<BS>', 'a<BS><Esc>', { desc = 'Delete char under cursor (via append)' })
 map('n', '<CR>', 'a<CR><Esc>', { desc = 'Insert newline (via append)' })
